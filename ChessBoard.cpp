@@ -10,10 +10,10 @@
 
 #include	<iostream>
 #include	"ChessBoard.hpp"
+#include	"PieceFactory.hpp"
 
 ChessBoard::ChessBoard()
 {
-
   for (int i(0) ; i < 8 ; ++i)
     {
       m_board.push_back(std::vector<std::pair<piece, team> >());
@@ -52,22 +52,30 @@ void						ChessBoard::initBoard()
     {
       m_board[i][7] = std::pair<piece, team>(m_board[i][0].first, White);
     }
-
+  m_direction[Black] = 1;
+  m_direction[White] = -1;
 }
 
-std::list<PieceInfo> const			*ChessBoard::getPieces(GameData::team t)
+std::list<PieceInfo *> const			*ChessBoard::getPieces(GameData::team t)
 {
-  static std::list<PieceInfo>	*l(NULL);
+  static std::list<PieceInfo *>		*l(NULL);
+  PieceFactory				*f;
 
   if (t == None)
     {
       if (l != NULL)
-	delete l;
+	{
+	  delete l;
+	  l = NULL;
+	}
       return NULL;
     }
 
+  f = PieceFactory::getInstance();
+  (void)f;
+
   if (l == NULL)
-    l = new std::list<PieceInfo>;
+    l = new std::list<PieceInfo *>;
 
   for (int i(0) ; i < 8 ; ++i)
     {
@@ -75,7 +83,7 @@ std::list<PieceInfo> const			*ChessBoard::getPieces(GameData::team t)
 	{
 	  if (m_board[i][j].second == t)
 	    {
-	      l->push_back(PieceInfo(i, j, t, m_board[i][j].first));
+	      l->push_back(f->create(i, j, t, m_board[i][j].first));
 	      std::cout << i << " // " << j << " || "
 			<< GameData::pieceNames[m_board[i][j].first] << std::endl;;
 	    }
@@ -124,10 +132,9 @@ std::ostream&					ChessBoard::display(std::ostream &os)
 	}
       os << "|" << std::endl;
     }
-      for (int j(0) ; j < 8 ; ++j)
-	os << "+---";
-      os << "+" << std::endl;
-
+  for (int j(0) ; j < 8 ; ++j)
+    os << "+---";
+  os << "+" << std::endl;
 
   return os;
 }

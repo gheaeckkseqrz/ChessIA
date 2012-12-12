@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 20:43:47 2012 WILMOT Pierre
-// Last update Mon Nov 26 22:52:08 2012 WILMOT Pierre
+// Last update Wed Dec  5 20:52:23 2012 WILMOT Pierre
 //
 
 
@@ -23,11 +23,11 @@ class	ChessBoard : public GameData
 public:
 
   ChessBoard();
-  ~ChessBoard();
+  virtual ~ChessBoard();
 
   void						initBoard();
   std::ostream&					display(std::ostream &os);
-  std::list<PieceInfo>	const 			*getPieces(GameData::team t);
+  std::list<PieceInfo *>  const 		*getPieces(GameData::team t);
 };
 
 std::ostream&					operator<<(std::ostream &os, ChessBoard cb);

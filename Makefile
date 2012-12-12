@@ -2,7 +2,15 @@ NAME	=	ChessIA
 
 SRC	=	main.cpp			\
 		ChessBoard.cpp			\
-		PieceInfo.cpp
+		GameData.cpp			\
+		PieceInfo.cpp			\
+		PieceFactory.cpp		\
+		Pawn.cpp			\
+		Bishop.cpp			\
+		Knight.cpp			\
+		Rook.cpp			\
+		King.cpp			\
+		Queen.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 

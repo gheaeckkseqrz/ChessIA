@@ -18,6 +18,13 @@ int	main(int ac, char **av)
 
   ChessBoard	board;
 
+  const std::list<PieceInfo *>	*l;
+
   std::cout << board << std::endl;
-  board.getPieces(GameData::White);
+  l = board.getPieces(GameData::White);
+
+  for (std::list<PieceInfo *>::const_iterator it = l->begin() ; it != l->end() ; ++it)
+    {
+      (*it)->getSuccessors(board);
+    }
 }

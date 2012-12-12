@@ -35,3 +35,17 @@ GameData::piece		PieceInfo::getPiece() const
 {
   return (m_piece);
 }
+
+std::list<GameData *>	*PieceInfo::getSuccessors(GameData & g) const
+{
+  std::cerr << "getSuccessors had been called from a PieceInfos, it should only be called from derivaterd classes" << std::endl;
+  (void)g;
+  return NULL;
+}
+
+bool			PieceInfo::caseIsValid(int x, int y) const
+{
+  if (x > 0 && x < 8 && y > 0 && y < 8)
+    return (true);
+  return (false);
+}
