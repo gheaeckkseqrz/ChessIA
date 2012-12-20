@@ -9,11 +9,11 @@ class Knight : public PieceInfo
  public:
   Knight(int x, int y, GameData::team t);
   ~Knight();
-  Knight(const Knight&);
-  Knight&		operator=(const Knight&);
+
+  std::list<GameData *>		*getSuccessors(GameData &g) const;
 
  private:
-
+  int			m_directions[8][2];
 };
 
 #endif

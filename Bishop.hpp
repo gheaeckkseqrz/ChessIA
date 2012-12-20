@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Tue Nov 27 00:29:00 2012 WILMOT Pierre
-// Last update Tue Nov 27 00:35:34 2012 WILMOT Pierre
+// Last update Thu Dec 20 19:20:51 2012 WILMOT Pierre
 //
 
 #ifndef __BISHOP_HPP__
@@ -20,8 +20,10 @@ class Bishop : public PieceInfo
   Bishop(int x, int y, GameData::team t);
   ~Bishop();
 
- private:
+  std::list<GameData *>		*getSuccessors(GameData &g) const;
 
+ private:
+  int			m_directions[4][2];
 };
 
 #endif

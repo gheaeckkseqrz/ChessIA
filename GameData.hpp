@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:14:07 2012 WILMOT Pierre
-// Last update Wed Dec 12 12:15:02 2012 WILMOT Pierre
+// Last update Wed Dec 12 15:23:55 2012 WILMOT Pierre
 //
 
 #ifndef	__GAMEDATA_HPP__
@@ -55,6 +55,7 @@ public:
   }
 
   int		getDirection(team t) const;
+  team		getOtherTeam(team t) const;
 
 protected:
   std::vector<std::vector<std::pair<piece, team> > >		m_board;

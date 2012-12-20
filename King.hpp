@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Tue Nov 27 00:29:52 2012 WILMOT Pierre
-// Last update Tue Nov 27 00:35:26 2012 WILMOT Pierre
+// Last update Thu Dec 20 19:16:39 2012 WILMOT Pierre
 //
 
 #ifndef __KING_HPP__
@@ -20,8 +20,10 @@ class King : public PieceInfo
   King(int x, int y, GameData::team t);
   ~King();
 
- private:
+  std::list<GameData *>		*getSuccessors(GameData &g) const;
 
+ private:
+  int			m_directions[8][2];
 };
 
 #endif

@@ -32,6 +32,8 @@ std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
 {
   GameData		*nextState;
 
+  std::cout << "Get Pawn Successor" << std::endl;
+
   nextState = new GameData(g);
   (void)nextState;
 
@@ -58,7 +60,6 @@ std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
     {
       std::cout << "Pawn can move right" << std::endl;
     }
-  std::cout << "Get Pawn Successor" << std::endl;
   return NULL;
 }
 

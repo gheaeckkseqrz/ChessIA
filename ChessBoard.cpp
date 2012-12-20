@@ -103,32 +103,38 @@ std::ostream&					ChessBoard::display(std::ostream &os)
       os << "+" << std::endl;
       for (int j(0) ; j < 8 ; ++j)
 	{
+	  os << "|";
+	  if (m_board[j][i].second == White)
+	    os << "\033[34m";
+	  if (m_board[j][i].second == Black)
+	    os << "\033[33m";
 	  switch (m_board[j][i].first)
 	    {
 	    case None:
-	      os << "|   ";
+	      os << "   ";
 	      break;
 	    case Pawn:
-	      os << "| P ";
+	      os << " P ";
 	      break;
 	    case Bishop:
-	      os << "| B ";
+	      os << " B ";
 	      break;
 	    case Knight:
-	      os << "| k ";
+	      os << " k ";
 	      break;
 	    case Rook:
-	      os << "| R ";
+	      os << " R ";
 	      break;
 	    case Queen:
-	      os << "| Q ";
+	      os << " Q ";
 	      break;
 	    case King:
-	      os << "| K ";
+	      os << " K ";
 	      break;
 	    default:
 	      break;
 	    }
+	  os << "\033[0m";
 	}
       os << "|" << std::endl;
     }
