@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Tue Nov 27 00:27:50 2012 WILMOT Pierre
-// Last update Wed Dec 12 13:46:22 2012 WILMOT Pierre
+// Last update Thu Dec 20 19:36:11 2012 WILMOT Pierre
 //
 
 #ifndef __PAWN_HPP__
@@ -24,7 +24,6 @@ class Pawn : public PieceInfo
   bool					startPosition(GameData &g) const;
 
  private:
-
 };
 
 #endif /* __PAWN_HPP__ */

@@ -14,6 +14,7 @@
 Pawn::Pawn(int x, int y, GameData::team t)
   : PieceInfo(x, y, t, GameData::Pawn)
 {
+  m_name = "Pawn";
 }
 
 Pawn::~Pawn()

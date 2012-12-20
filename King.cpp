@@ -14,6 +14,9 @@
 King::King(int x, int y, GameData::team t)
   : PieceInfo(x, y, t, GameData::King)
 {
+  m_name = "King";
+
+  m_directionsNb = 8;
   m_directions[0][0] = 1;
   m_directions[0][1] = 1;
   m_directions[1][0] = 1;
@@ -31,29 +34,12 @@ King::King(int x, int y, GameData::team t)
   m_directions[6][1] = 1;
   m_directions[7][0] = 0;
   m_directions[7][1] = -1;
+
+  m_moveRange = 1;
 }
 
 King::~King()
 {
 }
 
-std::list<GameData *>		*King::getSuccessors(GameData &g) const
-{
-  std::cout << "Get King Successor" << std::endl;
-  for (int a(0) ; a < 8 ; ++a)
-    {
-      if (caseIsValid(m_x + m_directions[a][0], m_y + m_directions[a][1]))
-	{
-	  if (g[m_x + m_directions[a][0]][m_y + m_directions[a][1]].first == GameData::Empty)
-	    {
-	      std::cout << "King can Reach " << m_x + m_directions[a][0] << "/" << m_x + m_directions[a][1] << std::endl;
-	    }
-	  else if (g[m_x + m_directions[a][0]][m_y + m_directions[a][1]].second == g.getOtherTeam(m_team))
-	    {
-	      std::cout << "King can Reach " << m_x + m_directions[a][0] << "/" << m_x + m_directions[a][1] << " (capture)" << std::endl;
-	    }
-	}
-    }
-  return (NULL);
-}
 

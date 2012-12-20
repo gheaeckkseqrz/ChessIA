@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Tue Nov 27 00:30:06 2012 WILMOT Pierre
-// Last update Thu Dec 20 19:20:50 2012 WILMOT Pierre
+// Last update Thu Dec 20 21:25:16 2012 WILMOT Pierre
 //
 
 #ifndef __QUEEN_HPP__
@@ -20,10 +20,7 @@ class Queen : public PieceInfo
   Queen(int x, int y, GameData::team t);
   ~Queen();
 
-  std::list<GameData *>		*getSuccessors(GameData &g) const;
-
  private:
-  int			m_directions[8][2];
 };
 
 #endif

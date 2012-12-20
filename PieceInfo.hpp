@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:18:52 2012 WILMOT Pierre
-// Last update Wed Dec 12 13:35:36 2012 WILMOT Pierre
+// Last update Thu Dec 20 20:58:07 2012 WILMOT Pierre
 //
 
 #ifndef	__PIECEINFO_HPP__
@@ -32,8 +32,12 @@ protected:
   PieceInfo();
   int				m_x;
   int				m_y;
+  int				m_directions[8][2];
+  int				m_directionsNb;
+  int				m_moveRange;
   GameData::team		m_team;
   GameData::piece		m_piece;
+  std::string			m_name;
 };
 
 #endif /* __PIECEINFO_HPP__ */

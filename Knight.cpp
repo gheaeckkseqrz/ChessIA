@@ -14,6 +14,8 @@
 Knight::Knight(int x, int y, GameData::team t)
   : PieceInfo(x, y, t, GameData::Knight)
 {
+  m_name = "Knight";
+
   m_directions[0][0] = 1;
   m_directions[0][1] = -2;
 
@@ -58,11 +60,11 @@ std::list<GameData *>		*Knight::getSuccessors(GameData &g) const
 	{
 	  if (g[dest_x][dest_y].first == GameData::Empty)
 	    {
-	      std::cout << "Knight can Reach " << dest_y << "/" << dest_y << std::endl;
+	      std::cout << "Knight can Reach " << dest_x << "/" << dest_y << std::endl;
 	    }
 	  else if (g[dest_x][dest_y].second == g.getOtherTeam(m_team))
 	    {
-	      std::cout << "Knight can Reach " << dest_y << "/" << dest_y << " (Capture)" << std::endl;
+	      std::cout << "Knight can Reach " << dest_x << "/" << dest_y << " (Capture)" << std::endl;
 	    }
 	}
     }
