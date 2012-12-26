@@ -15,28 +15,20 @@ Knight::Knight(int x, int y, GameData::team t)
   : PieceInfo(x, y, t, GameData::Knight)
 {
   m_name = "Knight";
-
   m_directions[0][0] = 1;
   m_directions[0][1] = -2;
-
   m_directions[1][0] = -1;
   m_directions[1][1] = -2;
-
   m_directions[2][0] = 2;
   m_directions[2][1] = -1;
-
   m_directions[3][0] = 2;
   m_directions[3][1] = 1;
-
   m_directions[4][0] = 1;
   m_directions[4][1] = 2;
-
   m_directions[5][0] = -1;
   m_directions[5][1] = 2;
-
   m_directions[6][0] = -2;
   m_directions[6][1] = 1;
-
   m_directions[7][0] = -2;
   m_directions[7][1] = -1;
 }
@@ -47,6 +39,11 @@ Knight::~Knight()
 
 std::list<GameData *>		*Knight::getSuccessors(GameData &g) const
 {
+  std::list<GameData *>	*successorStateList = NULL;
+  GameData		*successorState;
+
+  successorStateList = new std::list<GameData *>();
+
   int	dest_x;
   int	dest_y;
 
@@ -61,12 +58,13 @@ std::list<GameData *>		*Knight::getSuccessors(GameData &g) const
 	  if (g[dest_x][dest_y].first == GameData::Empty)
 	    {
 	      std::cout << "Knight can Reach " << dest_x << "/" << dest_y << std::endl;
-	    }
-	  else if (g[dest_x][dest_y].second == g.getOtherTeam(m_team))
-	    {
-	      std::cout << "Knight can Reach " << dest_x << "/" << dest_y << " (Capture)" << std::endl;
+	      successorState = new GameData(g);
+	      successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+	      successorState->setCase(dest_x, dest_y, m_piece, m_team);
+	      successorStateList->push_back(successorState);
+	      successorState = NULL;
 	    }
 	}
     }
-  return (NULL);
+  return (successorStateList);
 }

@@ -14,14 +14,6 @@
 
 ChessBoard::ChessBoard()
 {
-  for (int i(0) ; i < 8 ; ++i)
-    {
-      m_board.push_back(std::vector<std::pair<piece, team> >());
-      for (int j(0) ; j < 8 ; ++j)
-	{
-	  m_board[i].push_back(std::pair<piece, team>(Empty, None));
-	}
-    }
   initBoard();
 }
 
@@ -92,58 +84,6 @@ std::list<PieceInfo *> const			*ChessBoard::getPieces(GameData::team t)
   return l;
 }
 
-std::ostream&					ChessBoard::display(std::ostream &os)
-{
-  os << "Displaying Board" << std::endl;
-
-  for (int i(0) ; i < 8 ; ++i)
-    {
-      for (int j(0) ; j < 8 ; ++j)
-	os << "+---";
-      os << "+" << std::endl;
-      for (int j(0) ; j < 8 ; ++j)
-	{
-	  os << "|";
-	  if (m_board[j][i].second == White)
-	    os << "\033[34m";
-	  if (m_board[j][i].second == Black)
-	    os << "\033[33m";
-	  switch (m_board[j][i].first)
-	    {
-	    case None:
-	      os << "   ";
-	      break;
-	    case Pawn:
-	      os << " P ";
-	      break;
-	    case Bishop:
-	      os << " B ";
-	      break;
-	    case Knight:
-	      os << " k ";
-	      break;
-	    case Rook:
-	      os << " R ";
-	      break;
-	    case Queen:
-	      os << " Q ";
-	      break;
-	    case King:
-	      os << " K ";
-	      break;
-	    default:
-	      break;
-	    }
-	  os << "\033[0m";
-	}
-      os << "|" << std::endl;
-    }
-  for (int j(0) ; j < 8 ; ++j)
-    os << "+---";
-  os << "+" << std::endl;
-
-  return os;
-}
 
 std::ostream&		operator<<(std::ostream &os, ChessBoard cb)
 {

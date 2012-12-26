@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 20:43:47 2012 WILMOT Pierre
-// Last update Wed Dec  5 20:52:23 2012 WILMOT Pierre
+// Last update Fri Dec 21 15:04:54 2012 WILMOT Pierre
 //
 
 
@@ -26,7 +26,6 @@ public:
   virtual ~ChessBoard();
 
   void						initBoard();
-  std::ostream&					display(std::ostream &os);
   std::list<PieceInfo *>  const 		*getPieces(GameData::team t);
 };
 

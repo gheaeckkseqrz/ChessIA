@@ -23,8 +23,23 @@ int	main(int ac, char **av)
   std::cout << board << std::endl;
   l = board.getPieces(GameData::White);
 
+  std::list<GameData *>	*successorStateList = NULL;
+  std::list<GameData *>	*successorStateListTmp = NULL;
+  successorStateList = new std::list<GameData *>();
+
   for (std::list<PieceInfo *>::const_iterator it = l->begin() ; it != l->end() ; ++it)
     {
-      (*it)->getSuccessors(board);
+      successorStateListTmp = (*it)->getSuccessors(board);
+      successorStateList->splice(successorStateList->end(), *successorStateListTmp);
+      delete successorStateListTmp;
     }
+  if (successorStateList != NULL)
+    {
+      for (std::list<GameData *>::iterator it2 = successorStateList->begin() ;
+	   it2 != successorStateList->end() ; ++it2)
+	{
+	  std::cout << **it2 << std::endl;
+	}
+    }
+  std::cout << successorStateList->size() << " possible moves" << std::endl;
 }

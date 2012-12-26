@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:14:07 2012 WILMOT Pierre
-// Last update Wed Dec 12 15:23:55 2012 WILMOT Pierre
+// Last update Fri Dec 21 15:05:00 2012 WILMOT Pierre
 //
 
 #ifndef	__GAMEDATA_HPP__
@@ -46,10 +46,12 @@ public:
       White
     };
 
-  GameData() {};
-  virtual ~GameData() {};
+  GameData();
+  GameData(GameData &g);
+  ~GameData() {};
 
-  std::vector<std::pair<piece, team> >	const &	operator[](int i) const
+  std::ostream&					display(std::ostream &os);
+  std::vector<std::pair<piece, team> >	&	operator[](int i)
   {
     return m_board[i];
   }
@@ -57,9 +59,13 @@ public:
   int		getDirection(team t) const;
   team		getOtherTeam(team t) const;
 
+  void		setCase(int x, int y, piece p, team t);
+
 protected:
   std::vector<std::vector<std::pair<piece, team> > >		m_board;
   int								m_direction[3];
 };
+
+std::ostream&					operator<<(std::ostream &os, GameData gd);
 
 #endif	/* __GAMEDATA_HPP__ */

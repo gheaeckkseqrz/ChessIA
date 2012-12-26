@@ -38,40 +38,42 @@ GameData::piece		PieceInfo::getPiece() const
 
 std::list<GameData *>	*PieceInfo::getSuccessors(GameData & g) const
 {
+  std::list<GameData *>	*successorStateList = NULL;
+  GameData		*successorState = NULL;
+
+  successorStateList = new std::list<GameData *>();
+
   std::cout << "Get " << m_name << " Successor" << std::endl;
   for (int a(0) ; a < m_directionsNb  ; ++a)
     {
-      for (int i(0) ; i < m_moveRange ; ++i)
+      std::cout << "Direction " << m_directions[a][0] << " / " << m_directions[a][1] << std::endl;
+      for (int i(1) ; i < m_moveRange ; ++i)
 	{
-	  for (int j(0) ; j < m_moveRange ; ++j)
+	  if (caseIsValid(m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1])))
 	    {
-	      if (caseIsValid(m_x + (i * m_directions[a][0]), m_y + (j * m_directions[a][1])))
+	      if (g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].first == GameData::Empty
+		  || g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].second == g.getOtherTeam(m_team))
 		{
-		  if (g[m_x + (i * m_directions[a][0])][m_y + (j * m_directions[a][1])].first == GameData::Empty)
-		    {
-		      std::cout << m_name << " can Reach " << i << "/" << j << std::endl;
-		    }
-		  else if (g[m_x + (i * m_directions[a][0])][m_y + (j * m_directions[a][1])].second == g.getOtherTeam(m_team))
-		    {
-		      std::cout << m_name << " can Reach " << i << "/" << j << " (capture)" << std::endl;
-		      i = 8;
-		      j = 8;
-		    }
-		  else
-		    {
-		      i = 8;
-		      j = 8;
-		    }
+		  std::cout << m_name << " can Reach " << m_x + (i * m_directions[a][0]) << "/" << m_y + (i * m_directions[a][1]) << std::endl;
+		  successorState = new GameData(g);
+		  successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+		  successorState->setCase(m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1]), m_piece, m_team);
+		  successorStateList->push_back(successorState);
+		  successorState = NULL;
 		}
 	      else
 		{
+		  std::cout << "COLISION on " << g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].first << std::endl;
 		  i = 8;
-		  j = 8;
 		}
+	    }
+	  else
+	    {
+	      i = 8;
 	    }
 	}
     }
-  return NULL;
+  return (successorStateList);
 }
 
 bool			PieceInfo::caseIsValid(int x, int y) const
