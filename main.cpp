@@ -10,6 +10,7 @@
 
 #include	<iostream>
 #include	"ChessBoard.hpp"
+#include	"Move.hpp"
 
 int	main(int ac, char **av)
 {
@@ -23,9 +24,9 @@ int	main(int ac, char **av)
   std::cout << board << std::endl;
   l = board.getPieces(GameData::White);
 
-  std::list<GameData *>	*successorStateList = NULL;
-  std::list<GameData *>	*successorStateListTmp = NULL;
-  successorStateList = new std::list<GameData *>();
+  std::list<Move *>	*successorStateList = NULL;
+  std::list<Move *>	*successorStateListTmp = NULL;
+  successorStateList = new std::list<Move *>();
 
   for (std::list<PieceInfo *>::const_iterator it = l->begin() ; it != l->end() ; ++it)
     {
@@ -35,7 +36,7 @@ int	main(int ac, char **av)
     }
   if (successorStateList != NULL)
     {
-      for (std::list<GameData *>::iterator it2 = successorStateList->begin() ;
+      for (std::list<Move *>::iterator it2 = successorStateList->begin() ;
 	   it2 != successorStateList->end() ; ++it2)
 	{
 	  std::cout << **it2 << std::endl;

@@ -36,12 +36,12 @@ GameData::piece		PieceInfo::getPiece() const
   return (m_piece);
 }
 
-std::list<GameData *>	*PieceInfo::getSuccessors(GameData & g) const
+std::list<Move *>	*PieceInfo::getSuccessors(GameData & g) const
 {
-  std::list<GameData *>	*successorStateList = NULL;
-  GameData		*successorState = NULL;
+  std::list<Move *>	*successorStateList = NULL;
+  Move			*successorState = NULL;
 
-  successorStateList = new std::list<GameData *>();
+  successorStateList = new std::list<Move *>();
 
   std::cout << "Get " << m_name << " Successor" << std::endl;
   for (int a(0) ; a < m_directionsNb  ; ++a)
@@ -55,17 +55,14 @@ std::list<GameData *>	*PieceInfo::getSuccessors(GameData & g) const
 		  || g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].second == g.getOtherTeam(m_team))
 		{
 		  std::cout << m_name << " can Reach " << m_x + (i * m_directions[a][0]) << "/" << m_y + (i * m_directions[a][1]) << std::endl;
-		  successorState = new GameData(g);
-		  successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-		  successorState->setCase(m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1]), m_piece, m_team);
+		  successorState = new Move(g, m_x, m_y, m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1]));
+		  // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+		  // successorState->setCase(m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1]), m_piece, m_team);
 		  successorStateList->push_back(successorState);
 		  successorState = NULL;
 		}
 	      else
-		{
-		  std::cout << "COLISION on " << g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].first << std::endl;
-		  i = 8;
-		}
+		i = 8;
 	    }
 	  else
 	    {

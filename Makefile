@@ -10,7 +10,9 @@ SRC	=	main.cpp			\
 		Knight.cpp			\
 		Rook.cpp			\
 		King.cpp			\
-		Queen.cpp
+		Queen.cpp			\
+		Move.cpp			\
+		MinMax.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 

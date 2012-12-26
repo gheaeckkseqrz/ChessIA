@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 12 12:09:32 2012 WILMOT Pierre
-// Last update Wed Dec 26 01:18:29 2012 WILMOT Pierre
+// Last update Wed Dec 26 23:12:04 2012 WILMOT Pierre
 //
 
 #include	"GameData.hpp"
@@ -22,7 +22,7 @@ GameData::GameData()
     }
 }
 
-GameData::GameData(GameData &g)
+GameData::GameData(GameData const  &g)
 {
   for (int i(0) ; i < 8 ; ++i)
     {

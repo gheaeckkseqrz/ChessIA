@@ -37,12 +37,12 @@ Knight::~Knight()
 {
 }
 
-std::list<GameData *>		*Knight::getSuccessors(GameData &g) const
+std::list<Move *>		*Knight::getSuccessors(GameData &g) const
 {
-  std::list<GameData *>	*successorStateList = NULL;
-  GameData		*successorState;
+  std::list<Move *>	*successorStateList = NULL;
+  Move			*successorState;
 
-  successorStateList = new std::list<GameData *>();
+  successorStateList = new std::list<Move *>();
 
   int	dest_x;
   int	dest_y;
@@ -58,9 +58,9 @@ std::list<GameData *>		*Knight::getSuccessors(GameData &g) const
 	  if (g[dest_x][dest_y].first == GameData::Empty)
 	    {
 	      std::cout << "Knight can Reach " << dest_x << "/" << dest_y << std::endl;
-	      successorState = new GameData(g);
-	      successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-	      successorState->setCase(dest_x, dest_y, m_piece, m_team);
+	      successorState = new Move(g, m_x, m_y, dest_x, dest_y);
+	      // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+	      // successorState->setCase(dest_x, dest_y, m_piece, m_team);
 	      successorStateList->push_back(successorState);
 	      successorState = NULL;
 	    }

@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:14:07 2012 WILMOT Pierre
-// Last update Fri Dec 21 15:05:00 2012 WILMOT Pierre
+// Last update Wed Dec 26 23:14:06 2012 WILMOT Pierre
 //
 
 #ifndef	__GAMEDATA_HPP__
@@ -47,11 +47,15 @@ public:
     };
 
   GameData();
-  GameData(GameData &g);
+  GameData(GameData const &g);
   ~GameData() {};
 
   std::ostream&					display(std::ostream &os);
   std::vector<std::pair<piece, team> >	&	operator[](int i)
+  {
+    return m_board[i];
+  }
+  std::vector<std::pair<piece, team> >	const &	operator[](int i) const
   {
     return m_board[i];
   }

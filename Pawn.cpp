@@ -29,12 +29,12 @@ bool				Pawn::startPosition(GameData &g) const
   return (false);
 }
 
-std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
+std::list<Move *>		*Pawn::getSuccessors(GameData &g) const
 {
-  std::list<GameData *>	*successorStateList = NULL;
-  GameData		*successorState;
+  std::list<Move *>	*successorStateList = NULL;
+  Move			*successorState;
 
-  successorStateList = new std::list<GameData *>();
+  successorStateList = new std::list<Move *>();
 
   std::cout << "Get Pawn Successor" << std::endl;
 
@@ -42,9 +42,9 @@ std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
       && g[m_x][m_y + g.getDirection(m_team)].first == GameData::Empty)
     {
       std::cout << "Pawn can move one case ahead" << std::endl;
-      successorState = new GameData(g);
-      successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-      successorState->setCase(m_x, m_y + g.getDirection(m_team), m_piece, m_team);
+      successorState = new Move(g, m_x, m_y, m_x, m_y + g.getDirection(m_team));
+      // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+      // successorState->setCase(m_x, m_y + g.getDirection(m_team), m_piece, m_team);
       successorStateList->push_back(successorState);
       successorState = NULL;
       if (caseIsValid(m_x, m_y + (2 * g.getDirection(m_team)))
@@ -52,9 +52,9 @@ std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
 	  && startPosition(g))
 	{
 	  std::cout << "Pawn can move two case ahead" << std::endl;
-	  successorState = new GameData(g);
-	  successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-	  successorState->setCase(m_x, m_y + (2 * g.getDirection(m_team)), m_piece, m_team);
+	  successorState = new Move(g, m_x, m_y, m_x, m_y + (2 * g.getDirection(m_team)));
+	  // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+	  // successorState->setCase(m_x, m_y + (2 * g.getDirection(m_team)), m_piece, m_team);
 	  successorStateList->push_back(successorState);
 	  successorState = NULL;
 	}
@@ -64,9 +64,9 @@ std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
       && g[m_x - 1][m_y + g.getDirection(m_team)].second != m_team)
     {
       std::cout << "Pawn can move left" << std::endl;
-      successorState = new GameData(g);
-      successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-      successorState->setCase(m_x - 1, m_y + g.getDirection(m_team), m_piece, m_team);
+      successorState = new Move(g, m_x, m_y, m_x - 1, m_y + g.getDirection(m_team));
+      // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+      // successorState->setCase(m_x - 1, m_y + g.getDirection(m_team), m_piece, m_team);
       successorStateList->push_back(successorState);
       successorState = NULL;
     }
@@ -75,9 +75,9 @@ std::list<GameData *>		*Pawn::getSuccessors(GameData &g) const
       && g[m_x + 1][m_y + g.getDirection(m_team)].second != m_team)
     {
       std::cout << "Pawn can move right" << std::endl;
-      successorState = new GameData(g);
-      successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-      successorState->setCase(m_x + 1, m_y + g.getDirection(m_team), m_piece, m_team);
+      successorState = new Move(g, m_x, m_y, m_x + 1, m_y + g.getDirection(m_team));
+      // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
+      // successorState->setCase(m_x + 1, m_y + g.getDirection(m_team), m_piece, m_team);
       successorStateList->push_back(successorState);
       successorState = NULL;
     }
