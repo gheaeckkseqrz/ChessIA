@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 12 12:09:32 2012 WILMOT Pierre
-// Last update Wed Dec 26 23:12:04 2012 WILMOT Pierre
+// Last update Thu Dec 27 19:08:36 2012 WILMOT Pierre
 //
 
 #include	"GameData.hpp"
@@ -20,6 +20,8 @@ GameData::GameData()
 	  m_board[i].push_back(std::pair<piece, team>(Empty, None));
 	}
     }
+  m_direction[GameData::White] = -1;
+  m_direction[GameData::Black] = 1;
 }
 
 GameData::GameData(GameData const  &g)
@@ -32,6 +34,8 @@ GameData::GameData(GameData const  &g)
 	  m_board[i].push_back(std::pair<piece, team>(g[i][j].first, g[i][j].second));
 	}
     }
+  m_direction[GameData::White] = -1;
+  m_direction[GameData::Black] = 1;
 }
 
 int			GameData::getDirection(team t) const

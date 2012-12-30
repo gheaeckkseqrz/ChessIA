@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 26 02:10:25 2012 WILMOT Pierre
-// Last update Wed Dec 26 23:08:37 2012 WILMOT Pierre
+// Last update Thu Dec 27 18:52:35 2012 WILMOT Pierre
 //
 
 #ifndef __MOVE_HPP__
@@ -21,6 +21,8 @@ public:
   Move(GameData g, int sx, int sy, int dx, int dy, GameData::piece p = GameData::Empty);
   ~Move();
 
+  GameData const &	getGameData() const;
+
   int		getSX() const;
   int		getSY() const;
   int		getDX() const;
@@ -32,7 +34,6 @@ private:
   int			m_destx;
   int			m_desty;
   GameData::piece	m_promotion;
-
 };
 
 #endif

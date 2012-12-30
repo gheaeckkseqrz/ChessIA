@@ -12,13 +12,15 @@ SRC	=	main.cpp			\
 		King.cpp			\
 		Queen.cpp			\
 		Move.cpp			\
-		MinMax.cpp
+		MinMax.cpp			\
+		RatedMove.cpp			\
+		OptionsParser.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
 INCLUDE	=
 
-LIB	=
+LIB	=	-lboost_program_options
 
 CC	=	g++
 

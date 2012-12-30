@@ -5,26 +5,35 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 26 01:53:02 2012 WILMOT Pierre
-// Last update Wed Dec 26 02:32:24 2012 WILMOT Pierre
+// Last update Sun Dec 30 20:33:46 2012 WILMOT Pierre
 //
 
 #ifndef __MINMAX_HPP__
 #define __MINMAX_HPP__
 
 #include	<iostream>
-#include	"GameData.hpp"
-#include	"Move.hpp"
+#include	"ChessBoard.hpp"
+#include	"RatedMove.hpp"
 
 class MinMax
 {
  public:
-  MinMax();
+  MinMax(int depth = 2);
   ~MinMax();
 
-  Move	const &	getBestMove(GameData const & current) const;
+  void		setDepth(int d);
+
+  Move	const &	getBestMove(ChessBoard const & current, GameData::team t) const;
 
  private:
 
+  RatedMove	*min(GameData const &gd, GameData::team t, int d) const;
+  RatedMove	*max(GameData const &gd, GameData::team t, int d) const;
+
+  float		eval(GameData const &gd, GameData::team t) const;
+
+  int		m_depth;
+  float		m_piecesVal[7];
 };
 
 #endif

@@ -36,17 +36,20 @@ GameData::piece		PieceInfo::getPiece() const
   return (m_piece);
 }
 
-std::list<Move *>	*PieceInfo::getSuccessors(GameData & g) const
+std::string			PieceInfo::getName() const
+{
+  return (m_name);
+}
+
+std::list<Move *>	*PieceInfo::getSuccessors(GameData const & g) const
 {
   std::list<Move *>	*successorStateList = NULL;
   Move			*successorState = NULL;
 
-  successorStateList = new std::list<Move *>();
+  successorStateList = new std::list<Move *>(); // Alloc 7
 
-  std::cout << "Get " << m_name << " Successor" << std::endl;
   for (int a(0) ; a < m_directionsNb  ; ++a)
     {
-      std::cout << "Direction " << m_directions[a][0] << " / " << m_directions[a][1] << std::endl;
       for (int i(1) ; i < m_moveRange ; ++i)
 	{
 	  if (caseIsValid(m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1])))
@@ -54,10 +57,7 @@ std::list<Move *>	*PieceInfo::getSuccessors(GameData & g) const
 	      if (g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].first == GameData::Empty
 		  || g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].second == g.getOtherTeam(m_team))
 		{
-		  std::cout << m_name << " can Reach " << m_x + (i * m_directions[a][0]) << "/" << m_y + (i * m_directions[a][1]) << std::endl;
-		  successorState = new Move(g, m_x, m_y, m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1]));
-		  // successorState->setCase(m_x, m_y, GameData::Empty, GameData::None);
-		  // successorState->setCase(m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1]), m_piece, m_team);
+		  successorState = new Move(g, m_x, m_y, m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1])); // Alloc 8
 		  successorStateList->push_back(successorState);
 		  successorState = NULL;
 		}

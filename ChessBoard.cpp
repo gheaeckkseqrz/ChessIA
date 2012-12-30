@@ -17,9 +17,18 @@ ChessBoard::ChessBoard()
   initBoard();
 }
 
+ChessBoard::ChessBoard(GameData const &gd)
+  :GameData(gd)
+{
+}
+
 ChessBoard::~ChessBoard()
 {
-  getPieces(None);
+}
+
+GameData const &				ChessBoard::getGameData() const
+{
+  return (*this);
 }
 
 void						ChessBoard::initBoard()
@@ -48,42 +57,43 @@ void						ChessBoard::initBoard()
   m_direction[White] = -1;
 }
 
-std::list<PieceInfo *> const			*ChessBoard::getPieces(GameData::team t)
+std::list<PieceInfo *> const			*ChessBoard::getPieces(GameData::team t) const
 {
-  static std::list<PieceInfo *>		*l(NULL);
-  PieceFactory				*f;
+  std::list<PieceInfo *>		*l(NULL);
+  PieceFactory				*f = PieceFactory::getInstance();
 
-  if (t == None)
-    {
-      if (l != NULL)
-	{
-	  delete l;
-	  l = NULL;
-	}
-      return NULL;
-    }
-
-  f = PieceFactory::getInstance();
-  (void)f;
-
-  if (l == NULL)
-    l = new std::list<PieceInfo *>;
+  l = new std::list<PieceInfo *>; // Alloc 1
 
   for (int i(0) ; i < 8 ; ++i)
     {
       for (int j(0) ; j < 8 ; ++j)
 	{
 	  if (m_board[i][j].second == t)
-	    {
-	      l->push_back(f->create(i, j, t, m_board[i][j].first));
-	      std::cout << i << " // " << j << " || "
-			<< GameData::pieceNames[m_board[i][j].first] << std::endl;;
-	    }
+	    l->push_back(f->create(i, j, t, m_board[i][j].first)); // ! new alloc 9
 	}
     }
-  return l;
+  return (l);
 }
 
+std::list<Move *> const			*ChessBoard::getSuccessors(GameData::team t) const
+{
+  const std::list<PieceInfo *>	*l;
+  l = getPieces(t);
+
+  std::list<Move *>	*successorStateList = NULL;
+  std::list<Move *>	*successorStateListTmp = NULL;
+  successorStateList = new std::list<Move *>(); // Alloc 2
+
+  for (std::list<PieceInfo *>::const_iterator it = l->begin() ; it != l->end() ; ++it)
+    {
+      successorStateListTmp = (*it)->getSuccessors(getGameData());
+      successorStateList->splice(successorStateList->end(), *successorStateListTmp);
+      delete successorStateListTmp; // Un-alloc 7
+      delete *it; // Un-alloc 9
+    }
+  delete l; // Un-alloc 1
+  return (successorStateList);
+}
 
 std::ostream&		operator<<(std::ostream &os, ChessBoard cb)
 {

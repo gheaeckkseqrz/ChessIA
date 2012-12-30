@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 26 23:27:08 2012 WILMOT Pierre
-// Last update Wed Dec 26 23:27:37 2012 WILMOT Pierre
+// Last update Wed Dec 26 23:56:28 2012 WILMOT Pierre
 //
 
 #ifndef __KNIGHT_HPP__
@@ -21,7 +21,7 @@ class Knight : public PieceInfo
   Knight(int x, int y, GameData::team t);
   ~Knight();
 
-  std::list<Move *>		*getSuccessors(GameData &g) const;
+  std::list<Move *>		*getSuccessors(GameData const &g) const;
 
  private:
   int			m_directions[8][2];

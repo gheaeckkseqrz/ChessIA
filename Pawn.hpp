@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Tue Nov 27 00:27:50 2012 WILMOT Pierre
-// Last update Wed Dec 26 23:24:08 2012 WILMOT Pierre
+// Last update Wed Dec 26 23:57:27 2012 WILMOT Pierre
 //
 
 #ifndef __PAWN_HPP__
@@ -20,8 +20,8 @@ class Pawn : public PieceInfo
   Pawn(int x, int y, GameData::team t);
   ~Pawn();
 
-  virtual std::list<Move *>		*getSuccessors(GameData &g) const;
-  bool					startPosition(GameData &g) const;
+  virtual std::list<Move *>		*getSuccessors(GameData const &g) const;
+  bool					startPosition(GameData const &g) const;
 
  private:
 };

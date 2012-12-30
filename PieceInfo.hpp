@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:18:52 2012 WILMOT Pierre
-// Last update Wed Dec 26 23:18:51 2012 WILMOT Pierre
+// Last update Sun Dec 30 23:08:46 2012 WILMOT Pierre
 //
 
 #ifndef	__PIECEINFO_HPP__
@@ -20,13 +20,14 @@ class	PieceInfo
 public:
 
   PieceInfo(int x, int y, GameData::team t, GameData::piece p);
-  ~PieceInfo() {};
+  virtual ~PieceInfo() {};
 
   int				getX() const;
   int				getY() const;
   GameData::team		getTeam() const;
   GameData::piece		getPiece() const;
-  virtual std::list<Move *>	*getSuccessors(GameData &g) const;
+  std::string			getName() const;
+  virtual std::list<Move *>	*getSuccessors(GameData const &g) const;
   bool				caseIsValid(int x, int y) const;
 
 protected:

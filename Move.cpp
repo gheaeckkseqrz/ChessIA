@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 26 02:10:30 2012 WILMOT Pierre
-// Last update Wed Dec 26 23:34:22 2012 WILMOT Pierre
+// Last update Thu Dec 27 18:53:24 2012 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -22,6 +22,10 @@ Move::~Move()
 {
 }
 
+GameData const &				Move::getGameData() const
+{
+  return (*this);
+}
 
 int			Move::getSX() const
 {

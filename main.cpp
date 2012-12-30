@@ -11,36 +11,26 @@
 #include	<iostream>
 #include	"ChessBoard.hpp"
 #include	"Move.hpp"
+#include	"MinMax.hpp"
+#include	"OptionsParser.hpp"
 
 int	main(int ac, char **av)
 {
-  (void) ac;
-  (void) av;
-
-  ChessBoard	board;
-
-  const std::list<PieceInfo *>	*l;
-
-  std::cout << board << std::endl;
-  l = board.getPieces(GameData::White);
-
-  std::list<Move *>	*successorStateList = NULL;
-  std::list<Move *>	*successorStateListTmp = NULL;
-  successorStateList = new std::list<Move *>();
-
-  for (std::list<PieceInfo *>::const_iterator it = l->begin() ; it != l->end() ; ++it)
+  try
     {
-      successorStateListTmp = (*it)->getSuccessors(board);
-      successorStateList->splice(successorStateList->end(), *successorStateListTmp);
-      delete successorStateListTmp;
+      OptionsParser	op(ac, av);
+      ChessBoard	board;
+      MinMax		mm(op.getDepth());
+
+      Move	a = mm.getBestMove(board, GameData::White);
+
+      std::cout << a.getGameData();
+      std::cout << a.getSX() << "/" << a.getSY() << " => " << a.getDX() << "/" << a.getDY() << std::endl;
     }
-  if (successorStateList != NULL)
+  catch(std::exception& e)
     {
-      for (std::list<Move *>::iterator it2 = successorStateList->begin() ;
-	   it2 != successorStateList->end() ; ++it2)
-	{
-	  std::cout << **it2 << std::endl;
-	}
+      std::cerr << "Unhandled Exception reached the top of main: "
+		<< e.what() << ", application will now exit" << std::endl;
+      return (2);
     }
-  std::cout << successorStateList->size() << " possible moves" << std::endl;
 }
