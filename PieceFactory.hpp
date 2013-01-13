@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Tue Nov 27 00:02:04 2012 WILMOT Pierre
-// Last update Thu Dec  6 23:30:24 2012 WILMOT Pierre
+// Last update Sun Jan 13 20:45:22 2013 WILMOT Pierre
 //
 
 #ifndef	__PIECEFACTORY_HPP__

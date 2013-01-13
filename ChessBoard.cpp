@@ -33,8 +33,6 @@ GameData const &				ChessBoard::getGameData() const
 
 void						ChessBoard::initBoard()
 {
-  std::cout << "Initialising Game" << std::endl;
-
   for (int i(0) ; i < 8 ; ++i)
     {
       m_board[i][1] = std::pair<piece, team>(Pawn, Black);

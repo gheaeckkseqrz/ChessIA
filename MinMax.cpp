@@ -23,9 +23,6 @@ MinMax::MinMax(int depth)
   m_piecesVal[GameData::Rook] = 5;
   m_piecesVal[GameData::Queen] = 9;
   m_piecesVal[GameData::King] = 0;
-
-  std::cout << "Depth is " << m_depth << std::endl;
-
 }
 
 MinMax::~MinMax()
@@ -54,23 +51,25 @@ RatedMove	*MinMax::min(GameData const &gd, GameData::team t, int d) const
   ChessBoard	board(gd);
 
   const std::list<Move *>	*successorStateList = NULL;
-  successorStateList = board.getSuccessors(GameData::White);
+  successorStateList = board.getSuccessors(t);
   std::list<RatedMove *>	*ratedSuccessorStateList = NULL;
   ratedSuccessorStateList = new std::list<RatedMove *>(); // Alloc 5 (min-func)
-
   for (std::list<Move *>::const_iterator it = successorStateList->begin() ;
        it != successorStateList->end() ; ++it)
     {
       if (d == 0)
-	ratedSuccessorStateList->push_back(new RatedMove(*it, eval((*it)->getGameData(), t))); // Alloc 4 (min-func)
+	  ratedSuccessorStateList->push_back(new RatedMove(*it, eval((*it)->getGameData(), t))); // Alloc 4 (min-func)
       else
-	ratedSuccessorStateList->push_back(max((*it)->getGameData(), t, d - 1));
+	{
+	  ret = max((*it)->getGameData(), gd.getOtherTeam(t), d - 1);
+	  ratedSuccessorStateList->push_back(new RatedMove(*it, ret->getScore())); // Alloc 4 (max-func)
+	  delete ret;
+	}
     }
   ret = &(*min_element(boost::make_indirect_iterator(ratedSuccessorStateList->begin()), boost::make_indirect_iterator(ratedSuccessorStateList->end())));
   for (std::list<Move *>::const_iterator it = successorStateList->begin() ;
        it != successorStateList->end() ; ++it)
     {
-      if (*it != ret)
 	delete *it; // Un-alloc 8 (min-func)
     }
   for (std::list<RatedMove *>::iterator it = ratedSuccessorStateList->begin() ;
@@ -90,7 +89,7 @@ RatedMove	*MinMax::max(GameData const &gd, GameData::team t, int d) const
   ChessBoard	board(gd);
 
   const std::list<Move *>	*successorStateList = NULL;
-  successorStateList = board.getSuccessors(GameData::White);
+  successorStateList = board.getSuccessors(t);
   std::list<RatedMove *>	*ratedSuccessorStateList = NULL;
   ratedSuccessorStateList = new std::list<RatedMove *>(); // Alloc 5 (max-func)
   for (std::list<Move *>::const_iterator it = successorStateList->begin() ;
@@ -100,13 +99,12 @@ RatedMove	*MinMax::max(GameData const &gd, GameData::team t, int d) const
 	ratedSuccessorStateList->push_back(new RatedMove(*it, eval((*it)->getGameData(), t))); // Alloc 4 (max-func)
       else
 	{
-	  ret = min((*it)->getGameData(), t, d - 1);
+	  ret = min((*it)->getGameData(), gd.getOtherTeam(t), d - 1);
 	  ratedSuccessorStateList->push_back(new RatedMove(*it, ret->getScore())); // Alloc 4 (max-func)
 	  delete ret;
 	}
     }
   ret = &(*max_element(boost::make_indirect_iterator(ratedSuccessorStateList->begin()), boost::make_indirect_iterator(ratedSuccessorStateList->end())));
-  //  ret = *max_element(ratedSuccessorStateList->begin(), ratedSuccessorStateList->end());
   for (std::list<Move *>::const_iterator it = successorStateList->begin() ;
        it != successorStateList->end() ; ++it)
     {
@@ -145,8 +143,11 @@ float		MinMax::eval(GameData const &gd, GameData::team t) const
     }
   delete pieces; // Un-alloc 2
 
-  // std::cout << gd << std::endl;
-  // std::cout << (pieceVal[t] - pieceVal[gd.getOtherTeam(t)]) << " = " << pieceVal[t] << " - " <<  pieceVal[gd.getOtherTeam(t)] << std::endl;
+  if ((pieceVal[t] - pieceVal[gd.getOtherTeam(t)]) != 0 && false)
+    {
+  std::cout << gd << std::endl;
+  std::cout << (pieceVal[t] - pieceVal[gd.getOtherTeam(t)]) << " = " << pieceVal[t] << " - " <<  pieceVal[gd.getOtherTeam(t)] << std::endl;
+    }
 
   counter++;
   return (pieceVal[t] - pieceVal[gd.getOtherTeam(t)]);

@@ -14,13 +14,17 @@ SRC	=	main.cpp			\
 		Move.cpp			\
 		MinMax.cpp			\
 		RatedMove.cpp			\
-		OptionsParser.cpp
+		OptionsParser.cpp		\
+		UCI.cpp				\
+		Threadable.cpp			\
+		Mutex.cpp			\
+		LogManager.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
 INCLUDE	=
 
-LIB	=	-lboost_program_options
+LIB	=	-lboost_program_options -lpthread
 
 CC	=	g++
 

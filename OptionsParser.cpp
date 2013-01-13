@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Dec 30 21:31:51 2012 WILMOT Pierre
-// Last update Sun Dec 30 22:21:00 2012 WILMOT Pierre
+// Last update Thu Jan  3 22:43:23 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -29,12 +29,8 @@ OptionsParser::OptionsParser(int ac, char **av)
     }
   if (vm.count("depth"))
     {
-      std::cout << "Depth was set to " << vm["depth"].as<int>() << std::endl;
       m_depth = vm["depth"].as<int>();
     }
-
-  std::cout << "Ooption Done : Depth : " << m_depth << std::endl;
-
 }
 
 OptionsParser::~OptionsParser()

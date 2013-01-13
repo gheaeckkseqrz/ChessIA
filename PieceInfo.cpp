@@ -60,6 +60,8 @@ std::list<Move *>	*PieceInfo::getSuccessors(GameData const & g) const
 		  successorState = new Move(g, m_x, m_y, m_x + (i * m_directions[a][0]), m_y + (i * m_directions[a][1])); // Alloc 8
 		  successorStateList->push_back(successorState);
 		  successorState = NULL;
+		  if (g[m_x + (i * m_directions[a][0])][m_y + (i * m_directions[a][1])].second == g.getOtherTeam(m_team))
+		    i = 8;
 		}
 	      else
 		i = 8;

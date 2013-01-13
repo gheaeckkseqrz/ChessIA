@@ -1,0 +1,6 @@
+New instance of LogManager
+Got [uci] from GUI
+Got [ucinewgame] from GUI
+Got [position startpos] from GUI
+Got [go wtime 30000 btime 30000] from GUI
+Got [isready] from GUI

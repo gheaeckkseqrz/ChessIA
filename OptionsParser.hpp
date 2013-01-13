@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Dec 30 21:32:01 2012 WILMOT Pierre
-// Last update Sun Dec 30 22:13:01 2012 WILMOT Pierre
+// Last update Sun Jan 13 19:40:51 2013 WILMOT Pierre
 //
 
 #ifndef __OPTIONSPARSER_HPP__
@@ -26,6 +26,7 @@ class OptionsParser
 
  private:
   int		m_depth;
+  int		m_debug;
 };
 
 #endif
