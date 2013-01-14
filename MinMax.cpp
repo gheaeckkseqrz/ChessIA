@@ -12,6 +12,7 @@
 #include	<algorithm>
 #include	<boost/iterator/indirect_iterator.hpp>
 #include	"MinMax.hpp"
+#include	"LogManager.hpp"
 
 
 MinMax::MinMax(int depth)
@@ -40,8 +41,10 @@ Move	const &	MinMax::getBestMove(ChessBoard const & current, GameData::team t) c
   GameData		n(current);
   RatedMove		*m;
 
+  LogManager::getInstance()->log("Starting Search");
   m = max(current.getGameData(), t, m_depth);
   static Move	ret(n, m->getSX(), m->getSY(), m->getDX(), m->getDY());
+  LogManager::getInstance()->log("Found Best Move");
   return (ret);
 }
 

@@ -1,6 +1,15 @@
 New instance of LogManager
 Got [uci] from GUI
+Sent [id name ChessIA]
+Sent [id author Pierre WILMOT]
+Sent [uciok]
 Got [ucinewgame] from GUI
 Got [position startpos] from GUI
+Initialising game with standard start position
 Got [go wtime 30000 btime 30000] from GUI
+Pushed a go action to the queue
+Starting Search
 Got [isready] from GUI
+Pushed a isready action to the queue
+Found Best Move
+Sending Move a7a6

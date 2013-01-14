@@ -14,22 +14,32 @@
 #include	"MinMax.hpp"
 #include	"OptionsParser.hpp"
 #include	"UCI.hpp"
+#include	"Action.hpp"
 
 int	main(int ac, char **av)
 {
   try
     {
-      UCI		uci("ChessIA", "Pierre WILMOT");
       OptionsParser	op(ac, av);
       ChessBoard	board;
       MinMax		mm(op.getDepth());
+      UCI		uci("ChessIA", "Pierre WILMOT");
+      Action		*action;
 
-      Move	a = mm.getBestMove(board, GameData::White);
-
-      while (!uci.mustQuit());
-
-      // std::cout << a.getGameData();
-      // std::cout << a.getSX() << "/" << a.getSY() << " => " << a.getDX() << "/" << a.getDY() << std::endl;
+      while (!uci.mustQuit())
+	{
+	  action = uci.getAction();
+	  if (action) // SALE
+	    {
+	      if (action->getType() == Action::Set)
+		board.setFromFen(action->getFen());
+	      else if (action->getType() == Action::Go)
+		{
+		  const Move m = mm.getBestMove(board, GameData::White);
+		  uci.sendMove(m);
+		}
+	    }
+	}
     }
   catch(std::exception& e)
     {

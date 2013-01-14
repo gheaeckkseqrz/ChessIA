@@ -18,7 +18,8 @@ SRC	=	main.cpp			\
 		UCI.cpp				\
 		Threadable.cpp			\
 		Mutex.cpp			\
-		LogManager.cpp
+		LogManager.cpp			\
+		Action.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 

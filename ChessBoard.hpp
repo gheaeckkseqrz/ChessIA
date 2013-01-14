@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 20:43:47 2012 WILMOT Pierre
-// Last update Thu Dec 27 19:11:27 2012 WILMOT Pierre
+// Last update Mon Jan 14 00:42:40 2013 WILMOT Pierre
 //
 
 
@@ -29,6 +29,7 @@ public:
   GameData const &				getGameData() const;
 
   void						initBoard();
+  void						setFromFen(std::string const &s);
   std::list<PieceInfo *>  const 		*getPieces(GameData::team t) const;
   std::list<Move *>	const			*getSuccessors(GameData::team t) const;
 };

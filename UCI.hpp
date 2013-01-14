@@ -5,14 +5,17 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:12 2013 WILMOT Pierre
-// Last update Sun Jan 13 20:23:47 2013 WILMOT Pierre
+// Last update Mon Jan 14 01:10:39 2013 WILMOT Pierre
 //
 
 #ifndef __UCI_HPP__
 #define __UCI_HPP__
 
 #include	<iostream>
+#include	<queue>
 #include	"Threadable.hpp"
+#include	"Action.hpp"
+#include	"Move.hpp"
 
 class UCI : public Threadable
 {
@@ -24,11 +27,17 @@ class UCI : public Threadable
   int			threadEntryPoint();
   void			setDebug(std::string const & s);
   void			setDebug(bool b);
-  void			isReady() const;
+  void			isReady();
+  void			position(std::string const &s) const;
+  Action		*getAction();
+  void			sendMove(Move const &a) const;
+  void			go(std::string const &s);
 
  private:
   std::string		m_name;
   std::string		m_author;
+  std::queue<Action *>	m_actionQueue;
+  Mutex			m_actionQueueMutex;
 };
 
 #endif

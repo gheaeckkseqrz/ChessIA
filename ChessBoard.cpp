@@ -31,6 +31,12 @@ GameData const &				ChessBoard::getGameData() const
   return (*this);
 }
 
+void						ChessBoard::setFromFen(std::string const &s)
+{
+  (void) s;
+  // TO FILL
+}
+
 void						ChessBoard::initBoard()
 {
   for (int i(0) ; i < 8 ; ++i)
