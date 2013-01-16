@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:14:07 2012 WILMOT Pierre
-// Last update Thu Dec 27 18:41:54 2012 WILMOT Pierre
+// Last update Wed Jan 16 00:04:36 2013 WILMOT Pierre
 //
 
 #ifndef	__GAMEDATA_HPP__
@@ -35,6 +35,12 @@ public:
       White
     };
 
+  enum	e_castle
+    {
+      KingSide = 0,
+      QueenSide = 1
+    };
+
   GameData();
   GameData(GameData const &g);
   ~GameData() {};
@@ -52,11 +58,14 @@ public:
   int		getDirection(team t) const;
   team		getOtherTeam(team t) const;
 
+  std::string	getFenString() const;
+
   void		setCase(int x, int y, piece p, team t);
 
 protected:
   std::vector<std::vector<std::pair<piece, team> > >		m_board;
   int								m_direction[3];
+  bool								m_castle[3][2];
 };
 
 std::ostream&					operator<<(std::ostream &os, GameData gd);

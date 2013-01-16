@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 12 12:09:32 2012 WILMOT Pierre
-// Last update Thu Dec 27 19:08:36 2012 WILMOT Pierre
+// Last update Wed Jan 16 01:55:47 2013 WILMOT Pierre
 //
 
 #include	"GameData.hpp"
@@ -22,6 +22,10 @@ GameData::GameData()
     }
   m_direction[GameData::White] = -1;
   m_direction[GameData::Black] = 1;
+  m_castle[GameData::White][KingSide] = true;
+  m_castle[GameData::Black][KingSide] = true;
+  m_castle[GameData::White][QueenSide] = true;
+  m_castle[GameData::Black][QueenSide] = true;
 }
 
 GameData::GameData(GameData const  &g)
@@ -53,6 +57,41 @@ GameData::team		GameData::getOtherTeam(team t) const
 void			GameData::setCase(int x, int y, piece p, team t)
 {
   m_board[x][y] = std::pair<piece, team>(p, t);
+}
+
+std::string		GameData::getFenString() const
+{
+  static std::string	result;
+  char			pieceLetter[] = "pbnrqk";
+  char			numbers[] = "012345678";
+  int			empty(0);
+
+  result = "";
+  for (int i(0) ; i < 8 ; ++i)
+    {
+      for (int j(0) ; j < 8 ; ++j)
+	{
+	  if (m_board[j][i].second != None && empty > 0)
+	    {
+	      result += numbers[empty];
+	      empty = 0;
+	    }
+	  if (m_board[j][i].second == White)
+	    result += (pieceLetter[m_board[j][i].first - 1] + ('A' - 'a'));
+	  else if (m_board[j][i].second == Black)
+	    result += pieceLetter[m_board[j][i].first - 1];
+	  else
+	    empty++;
+	}
+      if (empty > 0)
+	{
+	  result += numbers[empty];
+	  empty = 0;
+	}
+      if (i < 7)
+	result += '/';
+    }
+  return (result);
 }
 
 std::ostream&					GameData::display(std::ostream &os)

@@ -28,16 +28,17 @@ int	main(int ac, char **av)
 
       while (!uci.mustQuit())
 	{
-	  action = uci.getAction();
-	  if (action) // SALE
+	  action = uci.getAction(); // TODO Add Vardcond to avoid active wait
+	  if (action) // TODO Add Vardcond to avoid active wait
 	    {
-	      if (action->getType() == Action::Set)
+	      if (action->getType() == Action::Position)
 		board.setFromFen(action->getFen());
 	      else if (action->getType() == Action::Go)
 		{
 		  const Move m = mm.getBestMove(board, GameData::White);
 		  uci.sendMove(m);
 		}
+	      // std::cout << board << std::endl;
 	    }
 	}
     }

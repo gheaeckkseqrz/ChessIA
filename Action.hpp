@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Jan 13 22:41:18 2013 WILMOT Pierre
-// Last update Sun Jan 13 23:59:34 2013 WILMOT Pierre
+// Last update Tue Jan 15 20:11:09 2013 WILMOT Pierre
 //
 
 #ifndef __ACTION_HPP__
@@ -19,7 +19,7 @@ public:
   enum e_type
     {
       IsReady,
-      Set,
+      Position,
       Go
     };
 

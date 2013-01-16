@@ -1,0 +1,45 @@
+New instance of LogManager
+Got [uci] from GUI
+Sent [id name ChessIA]
+Sent [id author Pierre WILMOT]
+Sent [uciok]
+Got [ucinewgame] from GUI
+Got [ucinewgame] from GUI
+Got [position startpos] from GUI
+DEBUG : fen = startpos
+Pushing position rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+Returning action rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+Got [go wtime 30000 btime 30000] from GUI
+Pushed a go action to the queue
+Got [position startpos] from GUI
+DEBUG : fen = startpos
+Pushing position rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+Got [go wtime 30000 btime 30000] from GUI
+Pushed a go action to the queue
+Returning action go wtime 30000 btime 30000
+Starting Search
+Got [isready] from GUI
+Pushed a isready action to the queue
+Found Best Move
+Sending Move a2a3
+Returning action isReady
+Returning action isReady
+Returning action isReady
+Got [position startpos moves a2a3 a2a3 b7b5 b7b5] from GUI
+DEBUG : fen = startpos moves a2a3 a2a3 b7b5 b7b5
+Pushing position rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
+Got [go wtime 30000 btime 30000] from GUI
+Pushed a go action to the queue
+Returning action go wtime 30000 btime 30000
+Got [position startpos moves a2a3 a2a3 b7b5 b7b5] from GUI
+DEBUG : fen = startpos moves a2a3 a2a3 b7b5 b7b5
+Starting Search
+Pushing position rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNRrnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
+Got [go wtime 30000 btime 30000] from GUI
+Pushed a go action to the queue
+Found Best Move
+Sending Move a2a3
+Returning action go wtime 30000 btime 30000
+Starting Search
+Found Best Move
+Sending Move a2a3

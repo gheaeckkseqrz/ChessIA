@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 20:43:47 2012 WILMOT Pierre
-// Last update Mon Jan 14 00:42:40 2013 WILMOT Pierre
+// Last update Tue Jan 15 22:34:23 2013 WILMOT Pierre
 //
 
 
@@ -17,6 +17,7 @@
 #include	<utility>
 #include	"GameData.hpp"
 #include	"PieceInfo.hpp"
+#include	"Move.hpp"
 
 class	ChessBoard : public GameData
 {
@@ -30,6 +31,7 @@ public:
 
   void						initBoard();
   void						setFromFen(std::string const &s);
+  void						applyMove(Move const &m);
   std::list<PieceInfo *>  const 		*getPieces(GameData::team t) const;
   std::list<Move *>	const			*getSuccessors(GameData::team t) const;
 };

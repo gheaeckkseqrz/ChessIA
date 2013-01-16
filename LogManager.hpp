@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Jan 13 20:37:49 2013 WILMOT Pierre
-// Last update Sun Jan 13 21:03:31 2013 WILMOT Pierre
+// Last update Tue Jan 15 20:05:41 2013 WILMOT Pierre
 //
 
 #ifndef __LOGMANAGER_HPP__
@@ -14,7 +14,7 @@
 #include	<iostream>
 #include	<fstream>
 
-#define		LOGFILE_PATH	"log/logfile"
+#define		LOGFILE_PATH	"/home/wilmot_p/ChessIAlogfile"
 
 class LogManager
 {

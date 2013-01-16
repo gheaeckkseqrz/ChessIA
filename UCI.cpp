@@ -5,13 +5,14 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:06 2013 WILMOT Pierre
-// Last update Mon Jan 14 01:19:41 2013 WILMOT Pierre
+// Last update Wed Jan 16 02:07:07 2013 WILMOT Pierre
 //
 
 #include	<iostream>
 #include	<sstream>
 #include	"UCI.hpp"
 #include	"LogManager.hpp"
+#include	"ChessBoard.hpp"
 
 UCI::UCI(std::string const & name, std::string const & author)
   :m_name(name), m_author(author)
@@ -58,33 +59,29 @@ void		UCI::setDebug(std::string const &s)
 
 void		UCI::isReady()
 {
-  m_actionQueue.push(new Action(Action::IsReady));
+  m_actionQueue.push(new Action(Action::IsReady, "isReady"));
   LogManager::getInstance()->log("Pushed a isready action to the queue");
 }
 
-void		UCI::position(std::string const &s) const
+void		UCI::position(std::string const &s)
 {
-  std::stringstream	ss(s);
-  std::string		p;
   std::string		fen;
-  std::string		active;
-  std::string		castling;
-  std::string		passant;
 
-  ss >> p;
-  ss >> fen;
-
+  fen = s.substr(9, s.size() - 9);
   if (fen == "startpos")
     {
-      LogManager::getInstance()->log("Initialising game with standard start position");
-      return;
+      fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+      m_actionQueue.push(new Action(Action::Position, fen));
+      LogManager::getInstance()->log("Pushing position "+fen);
     }
   else
     {
-      LogManager::getInstance()->log("Fen is "+fen);
-      ss >> active;
-      ss >> castling;
-      ss >> passant;
+      if (fen.compare(0, 15, "startpos moves ") == 0) // glchess position format
+	{
+	  fen = generateFenFromStarposMoves(fen);
+	  m_actionQueue.push(new Action(Action::Position, fen));
+	}
+      LogManager::getInstance()->log("Pushing position "+fen);
     }
 }
 
@@ -96,11 +93,13 @@ Action		*UCI::getAction()
   if (m_actionQueue.empty())
     {
       m_actionQueueMutex.unlock();
+      // LogManager::getInstance()->log("No action to return");
       return (NULL);
     }
   a = m_actionQueue.back();
   m_actionQueue.pop();
   m_actionQueueMutex.unlock();
+  LogManager::getInstance()->log("Returning action "+a->getFen());
   return a;
 }
 
@@ -122,8 +121,33 @@ void		UCI::sendMove(Move const &m) const
 void		UCI::go(std::string const &s)
 {
   (void)s;
-  m_actionQueue.push(new Action(Action::Go));
+  m_actionQueue.push(new Action(Action::Go, s));
   LogManager::getInstance()->log("Pushed a go action to the queue");
+}
+
+std::string	UCI::generateFenFromStarposMoves(std::string const &s) const
+{
+  ChessBoard		cb;
+  Move			m(GameData(), 3, 3, 3, 3);
+  std::string		move;
+  std::stringstream	ss(s);
+
+  LogManager::getInstance()->log("Generating FEN for "+s);
+
+  ss >> move;
+  ss >> move;
+  ss >> move;
+  while (move != "")
+    {
+      m.setFromLAN(move);
+      cb.applyMove(m);
+      std::cout << "Applying Move " << move << std::endl;
+      std::cout << cb << std::endl;
+      move = "";
+      ss >> move;
+    }
+  LogManager::getInstance()->log("Result is "+cb.getFenString());
+  return (cb.getFenString());
 }
 
 int		UCI::threadEntryPoint()

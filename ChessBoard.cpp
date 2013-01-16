@@ -11,6 +11,7 @@
 #include	<iostream>
 #include	"ChessBoard.hpp"
 #include	"PieceFactory.hpp"
+#include	"LogManager.hpp"
 
 ChessBoard::ChessBoard()
 {
@@ -33,8 +34,70 @@ GameData const &				ChessBoard::getGameData() const
 
 void						ChessBoard::setFromFen(std::string const &s)
 {
-  (void) s;
-  // TO FILL
+  int		x(0);
+  int		y(0);
+  int		empty(0);
+
+  LogManager::getInstance()->log("Setting from FEN "+s);
+
+  for (unsigned int i(0) ; i < s.size() ; ++i)
+    {
+      switch (s[i])
+	{
+	case 'p':
+	  setCase(x, y, Pawn, Black);
+	  break;
+	case 'b':
+	  setCase(x, y, Bishop, Black);
+	  break;
+	case 'n':
+	  setCase(x, y, Knight, Black);
+	  break;
+	case 'r':
+	  setCase(x, y, Rook, Black);
+	  break;
+	case 'q':
+	  setCase(x, y, Queen, Black);
+	  break;
+	case 'k':
+	  setCase(x, y, King, Black);
+	  break;
+	case 'P':
+	  setCase(x, y, Pawn, White);
+	  break;
+	case 'B':
+	  setCase(x, y, Bishop, White);
+	  break;
+	case 'N':
+	  setCase(x, y, Knight, White);
+	  break;
+	case 'R':
+	  setCase(x, y, Rook, White);
+	  break;
+	case 'K':
+	  setCase(x, y, King, White);
+	  break;
+	case 'Q':
+	  setCase(x, y, Queen, White);
+	  break;
+	case '/':
+	  x = -1;
+	  y++;
+	  break;
+	}
+      if (s[i] >= '0' && s[i] <= '8')
+	{
+	  for (empty = (s[i] - '0') ; empty > 0 ; --empty)
+	    {
+	      setCase(x, y, Empty, None);
+	      x++;
+	    }
+	}
+      else
+	x++;
+      if (x >= 7 && y >= 7)
+	break;
+    }
 }
 
 void						ChessBoard::initBoard()
@@ -97,6 +160,14 @@ std::list<Move *> const			*ChessBoard::getSuccessors(GameData::team t) const
     }
   delete l; // Un-alloc 1
   return (successorStateList);
+}
+
+void					ChessBoard::applyMove(Move const &m)
+{
+  setCase(m.getDX(), m.getDY(), m_board[m.getSX()][m.getSY()].first, m_board[m.getSX()][m.getSY()].second);
+  setCase(m.getSX(), m.getSY(), GameData::Empty, GameData::None);
+
+  // TODO : NEED TO ADD CASTLING MANAGEMENT (cf Move::apply())
 }
 
 std::ostream&		operator<<(std::ostream &os, ChessBoard cb)
