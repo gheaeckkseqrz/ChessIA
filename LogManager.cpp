@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Jan 13 20:37:55 2013 WILMOT Pierre
-// Last update Tue Jan 15 20:05:18 2013 WILMOT Pierre
+// Last update Wed Jan 16 15:56:55 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -21,6 +21,13 @@ LogManager::LogManager()
       std::cerr << "Can't open " << LOGFILE_PATH << std::endl;
     }
   log("New instance of LogManager");
+
+  m_colorCodes[UCI] = 32;
+  m_colorCodes[UCI_IN] = 33;
+  m_colorCodes[UCI_OUT] = 34;
+  m_colorCodes[MinMax] = 35;
+  m_colorCodes[ChessBoard] = 31;
+  m_colorCodes[Unknow] = 0;
 }
 
 LogManager::~LogManager()
@@ -40,7 +47,9 @@ LogManager		*LogManager::getInstance()
     }
 }
 
-void			LogManager::log(std::string const &s)
+void			LogManager::log(std::string const &s, e_source source)
 {
-  m_logfile << s << std::endl;
+  m_mutex.lock();
+  m_logfile << "\033[" << m_colorCodes[source] << "m" << s << "\033[0m" << std::endl;
+  m_mutex.unlock();
 }

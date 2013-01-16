@@ -38,7 +38,7 @@ void						ChessBoard::setFromFen(std::string const &s)
   int		y(0);
   int		empty(0);
 
-  LogManager::getInstance()->log("Setting from FEN "+s);
+  LogManager::getInstance()->log("Setting from FEN "+s, LogManager::ChessBoard);
 
   for (unsigned int i(0) ; i < s.size() ; ++i)
     {

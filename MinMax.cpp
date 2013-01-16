@@ -41,10 +41,10 @@ Move	const &	MinMax::getBestMove(ChessBoard const & current, GameData::team t) c
   GameData		n(current);
   RatedMove		*m;
 
-  LogManager::getInstance()->log("Starting Search");
+  LogManager::getInstance()->log("Starting Search", LogManager::MinMax);
   m = max(current.getGameData(), t, m_depth);
   static Move	ret(n, m->getSX(), m->getSY(), m->getDX(), m->getDY());
-  LogManager::getInstance()->log("Found Best Move");
+  LogManager::getInstance()->log("Found Best Move", LogManager::MinMax);
   return (ret);
 }
 

@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:06 2013 WILMOT Pierre
-// Last update Wed Jan 16 02:07:07 2013 WILMOT Pierre
+// Last update Wed Jan 16 15:52:46 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -27,11 +27,11 @@ UCI::~UCI()
 bool		UCI::registerEngine() const
 {
   std::cout << "id name " << m_name << std::endl;
-  LogManager::getInstance()->log("Sent [id name "+m_name+"]");
+  LogManager::getInstance()->log("Sent [id name "+m_name+"]", LogManager::UCI_OUT);
   std::cout << "id author " << m_author << std::endl;
-  LogManager::getInstance()->log("Sent [id author "+m_author+"]");
+  LogManager::getInstance()->log("Sent [id author "+m_author+"]", LogManager::UCI_OUT);
   std::cout << "uciok" << std::endl;
-  LogManager::getInstance()->log("Sent [uciok]");
+  LogManager::getInstance()->log("Sent [uciok]", LogManager::UCI_OUT);
   return true;
 }
 
@@ -45,14 +45,14 @@ void		UCI::setDebug(std::string const &s)
 
   if (word == "on")
     {
-      LogManager::getInstance()->log("Set debug On");
+      LogManager::getInstance()->log("Set debug On", LogManager::UCI);
       std::cout << "info Debug set on" << std::endl;
-      // Set debug on
+      // TODO : Set debug on
     }
   if (word == "off")
     {
-      LogManager::getInstance()->log("Set debug Off");
-      // Set debug off
+      LogManager::getInstance()->log("Set debug Off", LogManager::UCI);
+      // TODO : Set debug off
     }
 
 }
@@ -60,7 +60,7 @@ void		UCI::setDebug(std::string const &s)
 void		UCI::isReady()
 {
   m_actionQueue.push(new Action(Action::IsReady, "isReady"));
-  LogManager::getInstance()->log("Pushed a isready action to the queue");
+  LogManager::getInstance()->log("Pushed a isready action to the queue", LogManager::UCI);
 }
 
 void		UCI::position(std::string const &s)
@@ -72,7 +72,7 @@ void		UCI::position(std::string const &s)
     {
       fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
       m_actionQueue.push(new Action(Action::Position, fen));
-      LogManager::getInstance()->log("Pushing position "+fen);
+      LogManager::getInstance()->log("Pushing position "+fen, LogManager::UCI);
     }
   else
     {
@@ -81,7 +81,7 @@ void		UCI::position(std::string const &s)
 	  fen = generateFenFromStarposMoves(fen);
 	  m_actionQueue.push(new Action(Action::Position, fen));
 	}
-      LogManager::getInstance()->log("Pushing position "+fen);
+      LogManager::getInstance()->log("Pushing position "+fen, LogManager::UCI);
     }
 }
 
@@ -99,7 +99,7 @@ Action		*UCI::getAction()
   a = m_actionQueue.back();
   m_actionQueue.pop();
   m_actionQueueMutex.unlock();
-  LogManager::getInstance()->log("Returning action "+a->getFen());
+  LogManager::getInstance()->log("Returning action "+a->getFen(), LogManager::UCI);
   return a;
 }
 
@@ -114,7 +114,7 @@ void		UCI::sendMove(Move const &m) const
   move += letters[m.getDX()];
   move += numbers[7 - m.getDY()];
 
-  LogManager::getInstance()->log("Sending Move "+move);
+  LogManager::getInstance()->log("Sending Move "+move, LogManager::UCI_OUT);
   std::cout << "bestmove " << move << std::endl;
 }
 
@@ -122,7 +122,7 @@ void		UCI::go(std::string const &s)
 {
   (void)s;
   m_actionQueue.push(new Action(Action::Go, s));
-  LogManager::getInstance()->log("Pushed a go action to the queue");
+  LogManager::getInstance()->log("Pushed a go action to the queue", LogManager::UCI);
 }
 
 std::string	UCI::generateFenFromStarposMoves(std::string const &s) const
@@ -132,7 +132,7 @@ std::string	UCI::generateFenFromStarposMoves(std::string const &s) const
   std::string		move;
   std::stringstream	ss(s);
 
-  LogManager::getInstance()->log("Generating FEN for "+s);
+  LogManager::getInstance()->log("Generating FEN for "+s, LogManager::UCI);
 
   ss >> move;
   ss >> move;
@@ -146,7 +146,7 @@ std::string	UCI::generateFenFromStarposMoves(std::string const &s) const
       move = "";
       ss >> move;
     }
-  LogManager::getInstance()->log("Result is "+cb.getFenString());
+  LogManager::getInstance()->log("Result is "+cb.getFenString(), LogManager::UCI);
   return (cb.getFenString());
 }
 
@@ -157,7 +157,7 @@ int		UCI::threadEntryPoint()
   while (!mustQuit())
     {
       std::getline(std::cin, guimsg);
-      LogManager::getInstance()->log("Got ["+guimsg+"] from GUI");
+      LogManager::getInstance()->log("Got ["+guimsg+"] from GUI", LogManager::UCI_IN);
 
       if (guimsg == "quit")
 	setMustQuit(true);
