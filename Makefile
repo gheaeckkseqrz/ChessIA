@@ -35,6 +35,10 @@ CXXFLAGS +=	-g $(INCLUDE)
 LFLAG	+=	$(INCLUDE) $(LIB)
 
 all:		$(NAME)
+		~/cpp2dia/cpp2dia.tclsh
+		mv output.dia doc/UML.dia
+		rm tags dot.dot dotout.dot
+		echo "Done !"
 
 $(NAME):	$(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDE)
