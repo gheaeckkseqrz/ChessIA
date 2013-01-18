@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:06 2013 WILMOT Pierre
-// Last update Wed Jan 16 15:52:46 2013 WILMOT Pierre
+// Last update Fri Jan 18 02:23:08 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -105,17 +105,8 @@ Action		*UCI::getAction()
 
 void		UCI::sendMove(Move const &m) const
 {
-  std::string	letters = "abcdefgh";
-  std::string	numbers = "12345678";
-  std::string	move = "";
-
-  move += letters[m.getSX()];
-  move += numbers[7 - m.getSY()];
-  move += letters[m.getDX()];
-  move += numbers[7 - m.getDY()];
-
-  LogManager::getInstance()->log("Sending Move "+move, LogManager::UCI_OUT);
-  std::cout << "bestmove " << move << std::endl;
+  LogManager::getInstance()->log("Sending Move "+m.getLAN(), LogManager::UCI_OUT);
+  std::cout << "bestmove " << m.getLAN() << std::endl;
 }
 
 void		UCI::go(std::string const &s)
@@ -141,8 +132,8 @@ std::string	UCI::generateFenFromStarposMoves(std::string const &s) const
     {
       m.setFromLAN(move);
       cb.applyMove(m);
-      std::cout << "Applying Move " << move << std::endl;
-      std::cout << cb << std::endl;
+      //      std::cout << "Applying Move " << move << std::endl;
+      // std::cout << cb << std::endl;
       move = "";
       ss >> move;
     }

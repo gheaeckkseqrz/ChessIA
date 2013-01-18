@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Jan 13 20:37:55 2013 WILMOT Pierre
-// Last update Wed Jan 16 15:56:55 2013 WILMOT Pierre
+// Last update Fri Jan 18 02:27:44 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -51,5 +51,6 @@ void			LogManager::log(std::string const &s, e_source source)
 {
   m_mutex.lock();
   m_logfile << "\033[" << m_colorCodes[source] << "m" << s << "\033[0m" << std::endl;
+  //  std::cout << "\033[" << m_colorCodes[source] << "m" << s << "\033[0m" << std::endl;
   m_mutex.unlock();
 }

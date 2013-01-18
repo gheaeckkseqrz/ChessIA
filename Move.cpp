@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 26 02:10:30 2012 WILMOT Pierre
-// Last update Wed Jan 16 02:12:57 2013 WILMOT Pierre
+// Last update Fri Jan 18 02:28:28 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -24,6 +24,11 @@ Move::~Move()
 GameData const &				Move::getGameData() const
 {
   return (*this);
+}
+
+void			Move::setGameData(GameData const &g)
+{
+  copy(g);
 }
 
 int			Move::getSX() const
@@ -45,6 +50,27 @@ int			Move::getDY() const
 {
   return (m_desty);
 }
+
+void			Move::setSX(int sx)
+{
+  m_srcx = sx;
+}
+
+void			Move::setSY(int sy)
+{
+  m_srcy = sy;
+}
+
+void			Move::setDX(int dx)
+{
+  m_destx = dx;
+}
+
+void			Move::setDY(int dy)
+{
+  m_desty = dy;
+}
+
 
 void			Move::apply()
 {
@@ -115,16 +141,32 @@ void			Move::apply()
 void			Move::setFromLAN(std::string const &s)
 {
   int	dec((s[3] == '-') ? 1 : 0);
-  m_srcx = s[0] - 'a';
-  m_srcy = s[1] - '0' - 1;
-  m_destx = s[2 + dec] - 'a';
-  m_desty = s[3 + dec] - '0' - 1;
 
-  // std::cout << "SetFromLAN " << s <<
-  //   "  || SX : " << m_srcx <<
-  //   "  || SY : " << m_srcy <<
-  //   "  || DX : " << m_destx <<
-  //   "  || DY : " << m_desty <<
-  //   std::endl;
+  m_srcx = (s[0] - 'a');
+  m_srcy = 7 - (s[1] - '1');
+  m_destx = (s[2 + dec] - 'a');
+  m_desty = 7 - (s[3 + dec] - '1');
 
+  apply();
+}
+
+std::string		Move::getLAN() const
+{
+  std::string		letters = "abcdefgh";
+  std::string		numbers = "12345678";
+  static std::string	move = "";
+
+  move = "";
+  move += letters[getSX()];
+  move += numbers[7 - getSY()];
+  move += letters[getDX()];
+  move += numbers[7 - getDY()];
+
+  return (move);
+}
+
+std::ostream&					operator<<(std::ostream &os, Move const &m)
+{
+  os << "[(" << m.getSX() << " / " << m.getSY() << ") => (" << m.getDX() << " / " << m.getDY() << ")]";
+  return (os);
 }

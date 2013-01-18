@@ -32,71 +32,74 @@ GameData const &				ChessBoard::getGameData() const
   return (*this);
 }
 
+
+// TODO : Rewrite this function
 void						ChessBoard::setFromFen(std::string const &s)
 {
-  int		x(0);
-  int		y(0);
-  int		empty(0);
+  int		i(0);
 
   LogManager::getInstance()->log("Setting from FEN "+s, LogManager::ChessBoard);
 
-  for (unsigned int i(0) ; i < s.size() ; ++i)
+  for (int y(R8) ; y <= R1 ; ++y)
     {
-      switch (s[i])
-	{
-	case 'p':
-	  setCase(x, y, Pawn, Black);
-	  break;
-	case 'b':
-	  setCase(x, y, Bishop, Black);
-	  break;
-	case 'n':
-	  setCase(x, y, Knight, Black);
-	  break;
-	case 'r':
-	  setCase(x, y, Rook, Black);
-	  break;
-	case 'q':
-	  setCase(x, y, Queen, Black);
-	  break;
-	case 'k':
-	  setCase(x, y, King, Black);
-	  break;
-	case 'P':
-	  setCase(x, y, Pawn, White);
-	  break;
-	case 'B':
-	  setCase(x, y, Bishop, White);
-	  break;
-	case 'N':
-	  setCase(x, y, Knight, White);
-	  break;
-	case 'R':
-	  setCase(x, y, Rook, White);
-	  break;
-	case 'K':
-	  setCase(x, y, King, White);
-	  break;
-	case 'Q':
-	  setCase(x, y, Queen, White);
-	  break;
-	case '/':
-	  x = -1;
-	  y++;
-	  break;
-	}
-      if (s[i] >= '0' && s[i] <= '8')
-	{
-	  for (empty = (s[i] - '0') ; empty > 0 ; --empty)
-	    {
-	      setCase(x, y, Empty, None);
-	      x++;
-	    }
-	}
-      else
-	x++;
-      if (x >= 7 && y >= 7)
-	break;
+      for (int x(CA) ; x <= CH ; ++x)
+  	{
+	  setCase(x, y, Empty, None);
+
+  	  switch (s[i])
+  	    {
+  	    case 'p':
+  	      setCase(x, y, Pawn, Black);
+  	      break;
+  	    case 'b':
+  	      setCase(x, y, Bishop, Black);
+  	      break;
+  	    case 'n':
+  	      setCase(x, y, Knight, Black);
+  	      break;
+  	    case 'r':
+  	      setCase(x, y, Rook, Black);
+  	      break;
+  	    case 'q':
+  	      setCase(x, y, Queen, Black);
+  	      break;
+  	    case 'k':
+  	      setCase(x, y, King, Black);
+  	      break;
+  	    case 'P':
+  	      setCase(x, y, Pawn, White);
+  	      break;
+  	    case 'B':
+  	      setCase(x, y, Bishop, White);
+  	      break;
+  	    case 'N':
+  	      setCase(x, y, Knight, White);
+  	      break;
+  	    case 'R':
+  	      setCase(x, y, Rook, White);
+  	      break;
+  	    case 'Q':
+  	      setCase(x, y, Queen, White);
+  	      break;
+  	    case 'K':
+  	      setCase(x, y, King, White);
+  	      break;
+  	    }
+  	  if (s[i] >= '1' && s[i] <= '8')
+  	    {
+  	      for (int e(0) ; e < (s[i] - '0') ; ++e)
+  	  	{
+  	  	  setCase(x, y, Empty, None);
+  	  	  x++;
+  	  	}
+  	      x--;
+  	    }
+  	  if (s[i] == '/')
+  	    {
+  	      x--;
+  	    }
+  	  i++;
+  	}
     }
 }
 

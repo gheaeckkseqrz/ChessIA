@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Wed Dec 12 12:09:32 2012 WILMOT Pierre
-// Last update Wed Jan 16 01:55:47 2013 WILMOT Pierre
+// Last update Fri Jan 18 02:27:18 2013 WILMOT Pierre
 //
 
 #include	"GameData.hpp"
@@ -29,6 +29,11 @@ GameData::GameData()
 }
 
 GameData::GameData(GameData const  &g)
+{
+  copy(g);
+}
+
+void			GameData::copy(GameData const &g)
 {
   for (int i(0) ; i < 8 ; ++i)
     {
@@ -67,9 +72,9 @@ std::string		GameData::getFenString() const
   int			empty(0);
 
   result = "";
-  for (int i(0) ; i < 8 ; ++i)
+  for (int i(R8) ; i <= R1 ; ++i)
     {
-      for (int j(0) ; j < 8 ; ++j)
+      for (int j(CA) ; j <= CH ; ++j)
 	{
 	  if (m_board[j][i].second != None && empty > 0)
 	    {
@@ -94,58 +99,66 @@ std::string		GameData::getFenString() const
   return (result);
 }
 
-std::ostream&					GameData::display(std::ostream &os)
+std::ostream&					GameData::display(std::ostream &os) const
 {
-  for (int i(0) ; i < 8 ; ++i)
+  std::string	letters("abcdefgh ");
+
+  for (int j(0) ; j < 9 ; ++j)
+    os << "+---";
+  os << "+" << std::endl;
+  for (int j(0) ; j < 9 ; ++j)
+    os << "| " << letters[j] << " ";
+  os << "|" << std::endl;
+  for (int i(R8) ; i <= R1 ; ++i) // Parcours en hauteur
     {
-      for (int j(0) ; j < 8 ; ++j)
+      for (int j(0) ; j < 9 ; ++j)
 	os << "+---";
       os << "+" << std::endl;
-      for (int j(0) ; j < 8 ; ++j)
+      for (int j(CA) ; j <= CH ; ++j) // Parcour en largeur
 	{
 	  os << "|";
 	  if (m_board[j][i].second == White)
-	    os << "\033[34m";
+	    os << "\033[33m"; // BLUE
 	  if (m_board[j][i].second == Black)
-	    os << "\033[33m";
+	    os << "\033[34m"; // YELLOW
 	  switch (m_board[j][i].first)
 	    {
 	    case None:
 	      os << "   ";
 	      break;
 	    case Pawn:
-	      os << " P ";
+	      os << " ♟ ";
 	      break;
 	    case Bishop:
-	      os << " B ";
+	      os << " ♝ ";
 	      break;
 	    case Knight:
-	      os << " k ";
+	      os << " ♞ ";
 	      break;
 	    case Rook:
-	      os << " R ";
+	      os << " ♜ ";
 	      break;
 	    case Queen:
-	      os << " Q ";
+	      os << " ♛ ";
 	      break;
 	    case King:
-	      os << " K ";
+	      os << " ♚ ";
 	      break;
 	    default:
 	      break;
 	    }
 	  os << "\033[0m";
 	}
-      os << "|" << std::endl;
+      os << "| " << 8 - i << " |" << std::endl;
     }
-  for (int j(0) ; j < 8 ; ++j)
+  for (int j(0) ; j < 9 ; ++j)
     os << "+---";
   os << "+" << std::endl;
 
   return os;
 }
 
-std::ostream&		operator<<(std::ostream &os, GameData gd)
+std::ostream&		operator<<(std::ostream &os, GameData const &gd)
 {
   return gd.display(os);
 }

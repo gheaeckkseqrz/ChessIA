@@ -38,7 +38,6 @@ int	main(int ac, char **av)
 		  const Move m = mm.getBestMove(board, GameData::White);
 		  uci.sendMove(m);
 		}
-	      // std::cout << board << std::endl;
 	    }
 	}
     }

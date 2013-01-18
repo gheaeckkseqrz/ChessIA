@@ -35,19 +35,22 @@ CXXFLAGS +=	-g $(INCLUDE)
 LFLAG	+=	$(INCLUDE) $(LIB)
 
 all:		$(NAME)
+
+$(NAME):	$(OBJ)
+		$(CC) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDE)
+
+diaUML:
 		~/cpp2dia/cpp2dia.tclsh
 		mv output.dia doc/UML.dia
 		rm tags dot.dot dotout.dot
 		echo "Done !"
 
-$(NAME):	$(OBJ)
-		$(CC) -o $(NAME) $(OBJ) $(LFLAG) $(INCLUDE)
 clean:
 		rm -f $(OBJ)
 
 fclean:		clean
 		rm -f $(NAME)
 
-re:		fclean all
+re:		fclean all diaUML
 
 .PHONY:		re clean fclean all

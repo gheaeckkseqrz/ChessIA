@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Sun Jan 13 20:37:49 2013 WILMOT Pierre
-// Last update Wed Jan 16 15:57:08 2013 WILMOT Pierre
+// Last update Fri Jan 18 02:28:52 2013 WILMOT Pierre
 //
 
 #ifndef __LOGMANAGER_HPP__

@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Mon Nov 26 22:14:07 2012 WILMOT Pierre
-// Last update Wed Jan 16 00:04:36 2013 WILMOT Pierre
+// Last update Fri Jan 18 02:15:37 2013 WILMOT Pierre
 //
 
 #ifndef	__GAMEDATA_HPP__
@@ -19,13 +19,24 @@ class	GameData
 public:
   enum	piece
     {
-      Empty,
-      Pawn,
-      Bishop,
-      Knight,
-      Rook,
-      Queen,
-      King
+      Empty = 0,
+      Pawn = 1,
+      Bishop = 2,
+      Knight = 3,
+      Rook = 4,
+      Queen = 5,
+      King = 6
+    };
+
+  std::string	m_pieceNames[9] =
+    {
+      "Empty",
+      "Pawn",
+      "Bishop",
+      "Knight",
+      "Rook",
+      "Queen",
+      "King"
     };
 
   enum	team
@@ -41,11 +52,37 @@ public:
       QueenSide = 1
     };
 
+  enum	e_row
+    {
+      R1 = 7,
+      R2 = 6,
+      R3 = 5,
+      R4 = 4,
+      R5 = 3,
+      R6 = 2,
+      R7 = 1,
+      R8 = 0
+    };
+
+  enum	e_col
+    {
+      CA = 0,
+      CB = 1,
+      CC = 2,
+      CD = 3,
+      CE = 4,
+      CF = 5,
+      CG = 6,
+      CH = 7
+    };
+
   GameData();
   GameData(GameData const &g);
   ~GameData() {};
 
-  std::ostream&					display(std::ostream &os);
+  void		copy(GameData const &g);
+
+  std::ostream&					display(std::ostream &os) const;
   std::vector<std::pair<piece, team> >	&	operator[](int i)
   {
     return m_board[i];
@@ -68,6 +105,6 @@ protected:
   bool								m_castle[3][2];
 };
 
-std::ostream&					operator<<(std::ostream &os, GameData gd);
+std::ostream&					operator<<(std::ostream &os, GameData const &gd);
 
 #endif	/* __GAMEDATA_HPP__ */
