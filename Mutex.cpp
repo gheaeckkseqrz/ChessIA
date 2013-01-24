@@ -5,7 +5,7 @@
 // Login   <jowett_j@epitech.net>
 // 
 // Started on  Wed Apr 11 02:33:22 2012 james jowett
-// Last update Mon Jul 30 03:10:11 2012 Pierre WILMOT
+// Last update Wed Jan 23 23:07:59 2013 WILMOT Pierre
 //
 
 #include "Mutex.hpp"
@@ -26,6 +26,11 @@ Mutex::Mutex(Mutex::e_type t)
   errno = 0;
   if (pthread_mutex_init(&m_mutex, (m_t == Normal) ? NULL : &attr) != 0)
     throw std::runtime_error(std::string("pthread_mutex_init(3): ") + strerror(errno));
+}
+
+pthread_mutex_t		*Mutex::getCMutex()
+{
+  return (&m_mutex);
 }
 
 bool	Mutex::lock()

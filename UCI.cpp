@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:06 2013 WILMOT Pierre
-// Last update Fri Jan 18 02:23:08 2013 WILMOT Pierre
+// Last update Thu Jan 24 10:40:44 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -17,6 +17,8 @@
 UCI::UCI(std::string const & name, std::string const & author)
   :m_name(name), m_author(author)
 {
+  // TODO : Encapsuler la VarCond
+  m_varcond = PTHREAD_COND_INITIALIZER;
   threadIt();
 }
 
@@ -92,15 +94,19 @@ Action		*UCI::getAction()
   m_actionQueueMutex.lock();
   if (m_actionQueue.empty())
     {
-      m_actionQueueMutex.unlock();
-      // LogManager::getInstance()->log("No action to return");
-      return (NULL);
+      // TODO : Encapsuler la VarCond
+      pthread_cond_wait (&m_varcond, m_actionQueueMutex.getCMutex());
     }
-  a = m_actionQueue.back();
-  m_actionQueue.pop();
+  else
+    {
+      a = m_actionQueue.back();
+      m_actionQueue.pop();
+      m_actionQueueMutex.unlock();
+      LogManager::getInstance()->log("Returning action "+a->getFen(), LogManager::UCI);
+      return a;
+    }
   m_actionQueueMutex.unlock();
-  LogManager::getInstance()->log("Returning action "+a->getFen(), LogManager::UCI);
-  return a;
+  return (NULL);
 }
 
 void		UCI::sendMove(Move const &m) const
@@ -132,8 +138,6 @@ std::string	UCI::generateFenFromStarposMoves(std::string const &s) const
     {
       m.setFromLAN(move);
       cb.applyMove(m);
-      //      std::cout << "Applying Move " << move << std::endl;
-      // std::cout << cb << std::endl;
       move = "";
       ss >> move;
     }
@@ -148,6 +152,8 @@ int		UCI::threadEntryPoint()
   while (!mustQuit())
     {
       std::getline(std::cin, guimsg);
+      // TODO : Encapsuler la VarCond
+      pthread_cond_signal(&m_varcond);
       LogManager::getInstance()->log("Got ["+guimsg+"] from GUI", LogManager::UCI_IN);
 
       if (guimsg == "quit")

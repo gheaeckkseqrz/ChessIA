@@ -5,7 +5,7 @@
 // Login   <jowett_j@epitech.net>
 // 
 // Started on  Wed Apr 11 02:14:01 2012 james jowett
-// Last update Mon Jul 30 03:05:32 2012 Pierre WILMOT
+// Last update Wed Jan 23 23:08:09 2013 WILMOT Pierre
 //
 
 #ifndef	__MUTEX_HPP__
@@ -33,6 +33,8 @@ public:
   bool			trylock(bool&);
   bool			unlock();
   e_type		getType();
+
+  pthread_mutex_t	*getCMutex();
 
   private:
   e_type		m_t;

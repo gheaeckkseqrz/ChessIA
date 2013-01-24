@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:12 2013 WILMOT Pierre
-// Last update Tue Jan 15 20:48:41 2013 WILMOT Pierre
+// Last update Wed Jan 23 23:01:40 2013 WILMOT Pierre
 //
 
 #ifndef __UCI_HPP__
@@ -39,6 +39,8 @@ class UCI : public Threadable
   std::string		m_author;
   std::queue<Action *>	m_actionQueue;
   Mutex			m_actionQueueMutex;
+  // TODO : Encapsuler la varcond
+  pthread_cond_t	m_varcond;
 };
 
 #endif
