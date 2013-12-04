@@ -19,7 +19,8 @@ SRC	=	main.cpp			\
 		Threadable.cpp			\
 		Mutex.cpp			\
 		LogManager.cpp			\
-		Action.cpp
+		Action.cpp			\
+		Varcond.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 
@@ -51,6 +52,6 @@ clean:
 fclean:		clean
 		rm -f $(NAME)
 
-re:		fclean all diaUML
+re:		fclean all
 
 .PHONY:		re clean fclean all

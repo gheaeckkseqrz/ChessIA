@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:06 2013 WILMOT Pierre
-// Last update Thu Jan 24 10:40:44 2013 WILMOT Pierre
+// Last update Wed Dec  4 22:44:26 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -17,8 +17,6 @@
 UCI::UCI(std::string const & name, std::string const & author)
   :m_name(name), m_author(author)
 {
-  // TODO : Encapsuler la VarCond
-  m_varcond = PTHREAD_COND_INITIALIZER;
   threadIt();
 }
 
@@ -56,7 +54,6 @@ void		UCI::setDebug(std::string const &s)
       LogManager::getInstance()->log("Set debug Off", LogManager::UCI);
       // TODO : Set debug off
     }
-
 }
 
 void		UCI::isReady()
@@ -94,8 +91,8 @@ Action		*UCI::getAction()
   m_actionQueueMutex.lock();
   if (m_actionQueue.empty())
     {
-      // TODO : Encapsuler la VarCond
-      pthread_cond_wait (&m_varcond, m_actionQueueMutex.getCMutex());
+      m_actionQueueMutex.unlock();
+      m_varcond.wait();
     }
   else
     {
@@ -105,7 +102,6 @@ Action		*UCI::getAction()
       LogManager::getInstance()->log("Returning action "+a->getFen(), LogManager::UCI);
       return a;
     }
-  m_actionQueueMutex.unlock();
   return (NULL);
 }
 
@@ -152,8 +148,6 @@ int		UCI::threadEntryPoint()
   while (!mustQuit())
     {
       std::getline(std::cin, guimsg);
-      // TODO : Encapsuler la VarCond
-      pthread_cond_signal(&m_varcond);
       LogManager::getInstance()->log("Got ["+guimsg+"] from GUI", LogManager::UCI_IN);
 
       if (guimsg == "quit")
@@ -168,6 +162,8 @@ int		UCI::threadEntryPoint()
 	position(guimsg);
       else if (guimsg.compare(0, 3, "go ") == 0)
 	go(guimsg);
+
+      m_varcond.signal();
     }
   return (0);
 }

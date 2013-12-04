@@ -15,6 +15,7 @@
 #include	"OptionsParser.hpp"
 #include	"UCI.hpp"
 #include	"Action.hpp"
+#include	"LogManager.hpp"
 
 int	main(int ac, char **av)
 {
@@ -28,8 +29,8 @@ int	main(int ac, char **av)
 
       while (!uci.mustQuit())
 	{
-	  action = uci.getAction(); // TODO Add Vardcond to avoid active wait
-	  if (action) // TODO Add Vardcond to avoid active wait
+	  action = uci.getAction();
+	  if (action)
 	    {
 	      if (action->getType() == Action::Position)
 		board.setFromFen(action->getFen());

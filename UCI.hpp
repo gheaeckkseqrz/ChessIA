@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:12 2013 WILMOT Pierre
-// Last update Wed Jan 23 23:01:40 2013 WILMOT Pierre
+// Last update Wed Dec  4 22:31:39 2013 WILMOT Pierre
 //
 
 #ifndef __UCI_HPP__
@@ -16,6 +16,7 @@
 #include	"Threadable.hpp"
 #include	"Action.hpp"
 #include	"Move.hpp"
+#include	"Varcond.hpp"
 
 class UCI : public Threadable
 {
@@ -39,8 +40,7 @@ class UCI : public Threadable
   std::string		m_author;
   std::queue<Action *>	m_actionQueue;
   Mutex			m_actionQueueMutex;
-  // TODO : Encapsuler la varcond
-  pthread_cond_t	m_varcond;
+  Varcond		m_varcond;
 };
 
 #endif
