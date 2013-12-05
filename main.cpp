@@ -32,7 +32,9 @@ int	main(int ac, char **av)
 	  action = uci.getAction();
 	  if (action)
 	    {
-	      if (action->getType() == Action::Position)
+	      if (action->getType() == Action::IsReady)
+		uci.readyOK();
+	      else if (action->getType() == Action::Position)
 		board.setFromFen(action->getFen());
 	      else if (action->getType() == Action::Go)
 		{

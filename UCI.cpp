@@ -5,7 +5,7 @@
 // Login   <wilmot@epitech.net>
 // 
 // Started on  Thu Jan  3 20:14:06 2013 WILMOT Pierre
-// Last update Wed Dec  4 22:44:26 2013 WILMOT Pierre
+// Last update Thu Dec  5 21:13:05 2013 WILMOT Pierre
 //
 
 #include	<iostream>
@@ -58,7 +58,9 @@ void		UCI::setDebug(std::string const &s)
 
 void		UCI::isReady()
 {
+  m_actionQueueMutex.lock();
   m_actionQueue.push(new Action(Action::IsReady, "isReady"));
+  m_actionQueueMutex.unlock();
   LogManager::getInstance()->log("Pushed a isready action to the queue", LogManager::UCI);
 }
 
@@ -70,7 +72,9 @@ void		UCI::position(std::string const &s)
   if (fen == "startpos")
     {
       fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+      m_actionQueueMutex.lock();
       m_actionQueue.push(new Action(Action::Position, fen));
+      m_actionQueueMutex.unlock();
       LogManager::getInstance()->log("Pushing position "+fen, LogManager::UCI);
     }
   else
@@ -78,9 +82,11 @@ void		UCI::position(std::string const &s)
       if (fen.compare(0, 15, "startpos moves ") == 0) // glchess position format
 	{
 	  fen = generateFenFromStarposMoves(fen);
+	  m_actionQueueMutex.lock();
 	  m_actionQueue.push(new Action(Action::Position, fen));
+	  m_actionQueueMutex.unlock();
+	  LogManager::getInstance()->log("Pushing position "+fen, LogManager::UCI);
 	}
-      LogManager::getInstance()->log("Pushing position "+fen, LogManager::UCI);
     }
 }
 
@@ -96,7 +102,7 @@ Action		*UCI::getAction()
     }
   else
     {
-      a = m_actionQueue.back();
+      a = m_actionQueue.front();
       m_actionQueue.pop();
       m_actionQueueMutex.unlock();
       LogManager::getInstance()->log("Returning action "+a->getFen(), LogManager::UCI);
@@ -111,10 +117,17 @@ void		UCI::sendMove(Move const &m) const
   std::cout << "bestmove " << m.getLAN() << std::endl;
 }
 
+void		UCI::readyOK()
+{
+  std::cout << "readyok" << std::endl;
+}
+
 void		UCI::go(std::string const &s)
 {
   (void)s;
+  m_actionQueueMutex.lock();
   m_actionQueue.push(new Action(Action::Go, s));
+  m_actionQueueMutex.unlock();
   LogManager::getInstance()->log("Pushed a go action to the queue", LogManager::UCI);
 }
 
